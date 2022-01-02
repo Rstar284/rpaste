@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rpaste</title>
+    <style>
+        * {
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+#code {
+    width: 100%;
+    height: 100%;
+    padding: .5em;
+    border: 0;
+    margin: 0;
+    resize: none;
+    color: #ffffff;
+    background: #000000;
+}
+
+#code-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 2em;
+}
+
+#navbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2em;
+    line-height: 2em;
+    text-align: right;
+    vertical-align: middle;
+    background: #1f1f1f;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+#navbar a {
+    display: inline-block;
+    padding: 0 .5em;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+#navbar a:hover {
+    background: #dadada;
+}   
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const saveBtn = document.getElementById('save');
+            const code = document.getElementById('code');
+            saveBtn.addEventListener('click', function() {
+            const headers = {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
+            let req = new Request('/api/', {method: 'POST', body: code.value, headers: headers});
+            fetch(req).then(
+                function(response) {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+                    return response.text()
+                }).then(function(text) {
+                    window.location = text;
+                }).catch(function(error) {
+                    alert(error);
+                    console.log(error);
+                })
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="code-wrapper"><textarea id="code" spellcheck="false"></textarea></div>
+    <div id="navbar">
+        <a id="save">Save</a>
+    </div>
+</body>
+</html>
