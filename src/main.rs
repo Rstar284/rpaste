@@ -8,7 +8,7 @@ use uuid::Uuid;
 
 #[launch]
 fn rocket() -> _ {
-    let config: Config = Config {port: 8080, ..Config::release_default()};
+    let config: Config = Config {port: 8080, cli_colors: false, ..Config::release_default()};
     rocket::custom(&config).mount("/", routes![index1, delete, get1]).mount("/api", routes![index, upload, get])
 }
 
