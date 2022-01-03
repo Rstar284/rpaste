@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rpaste</title>
     <style>
-        * {box-sizing: border-box;font-family: monospace;font-size: 17px;}
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap');
+        * {box-sizing: border-box;font-family: 'JetBrains Mono', monospace;font-size: 17px;}
 
 #code {
     width: 100%;
     height: 100%;
     padding: .5em;
+    padding-left: 35px;
     border: 0;
     margin: 0;
     background: #000000;
@@ -49,7 +51,16 @@
 
 #navbar a:hover {
     background: #dadada;
-}   
+}
+#linenos {
+    color: #ffffff;
+    z-index: 1000;
+	position: absolute;
+	width: 15px;
+	text-align: right;
+	user-select: none;
+}
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
@@ -64,6 +75,12 @@
         }).then(function(text) {
             code.innerHTML = text
             hljs.highlightElement(code);
+            const linecount = text.split('\n').length
+            let h = ''
+            for(let i = 0; i < linecount; i++) {
+                h += (i+1).toString() + '<br/>'
+            }
+            document.getElementById('linenos').innerHTML = h
         }).catch(function(error) {
             alert(error);
             console.log(error);
@@ -75,5 +92,5 @@
     })
 </script>
 </head>
-<body><div id="code-wrapper"><pre id="code"></pre></div><div id="navbar"><a id="copy-btn">Copy Link</a></div></body>
+<body><div id="linenos"></div><div id="code-wrapper"><pre id="code" tabindex="0" spellcheck="false"></pre></div><div id="navbar"><a id="copy-btn">Copy Link</a></div></body>
 </html>
