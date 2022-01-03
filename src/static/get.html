@@ -8,13 +8,12 @@
     <style>
         * {box-sizing: border-box;font-family: monospace;font-size: 17px;}
 
-code {
+#code {
     width: 100%;
     height: 100%;
     padding: .5em;
     border: 0;
     margin: 0;
-    resize: none;
     background: #000000;
 }
 
@@ -63,7 +62,8 @@ code {
             if(!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
             return response.text();
         }).then(function(text) {
-            code.innerHTML = hljs.highlightAuto(text).value;
+            code.innerHTML = text
+            hljs.highlightElement(code);
         }).catch(function(error) {
             alert(error);
             console.log(error);
@@ -75,5 +75,5 @@ code {
     })
 </script>
 </head>
-<body><div id="code-wrapper"><pre><code id="code" spellcheck="false"></code></pre></div><div id="navbar"><a id="copy-btn">Copy Link</a></div></body>
+<body><div id="code-wrapper"><pre id="code"></pre></div><div id="navbar"><a id="copy-btn">Copy Link</a></div></body>
 </html>
