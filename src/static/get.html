@@ -2,24 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Content-Type-Options: nosniff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rpaste</title>
     <style>
-        * {
-    box-sizing: border-box;
-    font-family: monospace;
-    font-size: 16px;
-}
+        * {box-sizing: border-box;font-family: monospace;font-size: 17px;}
 
-#code {
+code {
     width: 100%;
     height: 100%;
     padding: .5em;
     border: 0;
     margin: 0;
     resize: none;
-    color: #ffffff;
     background: #000000;
 }
 
@@ -57,30 +52,28 @@
     background: #dadada;
 }   
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
 <script>
-    const code = document.getElementById('code');
-    const copyBtn = document.getElementById('copy');
     document.addEventListener('DOMContentLoaded', function() {
+        const code = document.getElementById('code');
+        const copyBtn = document.getElementById('copy-btn');
         fetch(`/api/${window.location.href.replace(window.location.origin, '').split('/')[1]}`)
         .then(function(response) {
             if(!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
             return response.text();
         }).then(function(text) {
-            code.value = text;
+            code.innerHTML = hljs.highlightAuto(text).value;
         }).catch(function(error) {
             alert(error);
             console.log(error);
         });
         copyBtn.addEventListener('click', function() {
             navigator.clipboard.writeText(window.location.href);
+            alert('Copied to clipboard!');
         });
     })
 </script>
 </head>
-<body>
-    <div id="code-wrapper"><textarea id="code" spellcheck="false"></textarea></div>
-    <div id="navbar">
-        <a id="copy">Copy Link</a>
-    </div>
-</body>
+<body><div id="code-wrapper"><pre><code id="code" spellcheck="false"></code></pre></div><div id="navbar"><a id="copy-btn">Copy Link</a></div></body>
 </html>

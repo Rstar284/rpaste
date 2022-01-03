@@ -17,8 +17,8 @@ fn index1() -> RawHtml<String> {
     RawHtml(include_str!("static/index.html").to_string())
 }
 
-#[get("/<id>")]
-fn get1(id: &str) -> RawHtml<String> {
+#[get("/<_id>")]
+fn get1(_id: &str) -> RawHtml<String> {
     RawHtml(include_str!("static/get.html").to_string())
 }
 
@@ -37,7 +37,7 @@ async fn upload(paste: Data<'_>) -> Result<String> {
     let key = Uuid::new_v4().to_string();
     let bytes =  128.kibibytes();
     paste.open(bytes).into_file(format!("upload/{}", key)).await?;
-    Ok(format!("http://paste.rstar284.tk:8080/{}\n", key))
+    Ok(format!("http://localhost:8080/{}\n", key))
 }
 
 #[get("/<key>")]
