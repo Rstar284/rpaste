@@ -10,3 +10,5 @@ edition = "2018"
 rocket = {git = "https://github.com/SergioBenitez/Rocket.git"}
 rand = "0.8.4"
 uuid = {version = "0.8.2", features = ["v4"]}
+serde_json = "1.0.74"
+reqwest = "0.11.8"
