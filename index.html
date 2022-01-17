@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rpaste - Base64</title>
+    <style>
+        * {
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+#code {
+    width: 100%;
+    height: 100%;
+    padding: .5em;
+    border: 0;
+    margin: 0;
+    resize: none;
+    color: #ffffff;
+    background: #000000;
+}
+
+#code-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 2em;
+}
+
+#navbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2em;
+    line-height: 2em;
+    text-align: right;
+    vertical-align: middle;
+    background: #1f1f1f;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+#navbar a {
+    display: inline-block;
+    padding: 0 .5em;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+#navbar a:hover {
+    background: #dadada;
+}   
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sbtn = document.getElementById('sbtn');
+            const cbtn = document.getElementById('cbtn');
+            const code = document.getElementById('code');
+            code.disabled = false
+            cbtn.style.display = 'none';
+            sbtn.style.display = 'content';
+            code.focus()
+            const b64 = location.hash.substr(1);
+            if (b64) {code.value = atob(b64);}
+            function save() {
+                location.hash = btoa(code.value)
+                code.disabled = true
+                sbtn.style.display = 'none'
+                cbtn.style.display = 'content'
+                code.value = atob(window.location.hash.substr(1))
+            }
+            function copy() {
+                navigator.clipboard.writeText(window.location.href)
+            }
+            sbtn.addEventListener('click', save)
+            cbtn.addEventListener('click', copy)
+        })
+    </script>
+</head>
+<body>
+    <div id="code-wrapper"><textarea id="code" spellcheck="false" disabled="false"></textarea></div>
+    <div id="navbar"><a id="sbtn">Save Paste</a><a id="cbtn">Copy Link</a></div>
+</body>
+</html>
