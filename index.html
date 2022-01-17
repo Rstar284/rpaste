@@ -57,6 +57,7 @@
     background: #dadada;
 }   
     </style>
+    <script src="./lz-string.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const sbtn = document.getElementById('sbtn');
@@ -67,13 +68,13 @@
             sbtn.style.display = 'content';
             code.focus()
             const b64 = location.hash.substr(1);
-            if (b64) {code.value = atob(b64);}
+            if (b64) {code.value = LZString.decompress(atob(b64));}
             function save() {
-                location.hash = btoa(code.value)
+                location.hash = LZString.compress(btoa(code.value))
                 code.disabled = true
                 sbtn.style.display = 'none'
                 cbtn.style.display = 'content'
-                code.value = atob(window.location.hash.substr(1))
+                code.value = LZString.decompress(atob(window.location.hash.substr(1)))
             }
             function copy() {
                 navigator.clipboard.writeText(window.location.href)
