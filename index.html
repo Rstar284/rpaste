@@ -57,46 +57,41 @@
     background: #dadada;
 }   
     </style>
-    <script src="./lzma-min.js"></script>
+    <script src="lzma-min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const sbtn = document.getElementById('sbtn');
             const cbtn = document.getElementById('cbtn');
             const code = document.getElementById('code');
-            const lzma = new LZMA('lzma_worker-min.js');
+            const lzma = new LZMA("lzma_worker-min.js");
             code.disabled = false
             cbtn.style.display = 'none';
             sbtn.style.display = 'inline-block';
             code.focus()
-            function toHex(s) {
-    // utf8 to latin1
-    var s = unescape(encodeURIComponent(s))
-    var h = ''
-    for (var i = 0; i < s.length; i++) {
-        h += s.charCodeAt(i).toString(16)
-    }
-    return h
-}
-
-function fromHex(h) {
-    var s = ''
-    for (var i = 0; i < h.length; i+=2) {
-        s += String.fromCharCode(parseInt(h.substr(i, 2), 16))
-    }
-    return decodeURIComponent(escape(s))
-}
-            const hex = location.hash.substr(1);
-            if (hex) {
-                code.value = fromHex(hex)
-                code.disabled = true
-                sbtn.style.display = 'none'
-                cbtn.style.display = 'inline-block';
+            const b64 = location.hash.substr(1);
+            if (b64) {
+                fetch("data:application/octet-stream;base64," + b64)
+                    .then(res => res.arrayBuffer())
+                    .then(buf => {
+                        const dec = lzma.decompress(buf);
+                        code.value = dec.toString();
+                        code.disabled = true
+                        sbtn.style.display = 'none'
+                        cbtn.style.display = 'inline-block';
+                    });
             }
             function save() {
-                location.hash = toHex(code.value)
-                code.disabled = true
-                sbtn.style.display = 'none'
-                cbtn.style.display = 'inline-block';
+                lzma.compress(code.value, 9, function(e,t) {if(t) {alert("Err")}; 
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = reader.result.substr(reader.result.indexOf(',') + 1);
+                    location.hash = base64;
+                    code.disabled = true
+                    sbtn.style.display = 'none'
+                    cbtn.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(new Blob([new Uint8Array(e)]));
+                });
             }
             function copy() {
                 navigator.clipboard.writeText(window.location.href)
