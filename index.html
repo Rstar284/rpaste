@@ -82,7 +82,7 @@
             }
             function copy() {
                 const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://rstar284.64-b.it:3000/api/new');
+                xhr.open('POST', 'http://rstar284.64-b.it:3000/api/new'); // Link Shortner API
                 xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     console.log(xhr.status);
