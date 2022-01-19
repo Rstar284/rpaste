@@ -57,7 +57,6 @@
     background: #dadada;
 }   
     </style>
-    <script src="lzma-min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const sbtn = document.getElementById('sbtn');
@@ -83,7 +82,16 @@
                     cbtn.style.display = 'inline-block';
             }
             function copy() {
-                navigator.clipboard.writeText(window.location.href)
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://rstar284.64-b.it:3000/api/new');
+                xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    navigator.clipboard.writeText(xhr.responseText);
+                }};
+                const data = `{"url": ${window.location.href}}`
+                xhr.send(data);
                 alert('Copied to clipboard!')
             }
             sbtn.addEventListener('click', save)
