@@ -70,28 +70,17 @@
             code.focus()
             const b64 = location.hash.substr(1);
             if (b64) {
-                fetch("data:application/octet-stream;base64," + b64)
-                    .then(res => res.arrayBuffer())
-                    .then(buf => {
-                        const dec = lzma.decompress(buf);
-                        code.value = dec.toString();
+                        code.value = atob(b64);
                         code.disabled = true
                         sbtn.style.display = 'none'
                         cbtn.style.display = 'inline-block';
-                    });
             }
             function save() {
-                lzma.compress(code.value, 9, function(e,t) {if(t) {alert("Err")}; 
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const base64 = reader.result.substr(reader.result.indexOf(',') + 1);
+                    const base64 = btoa(code.value)
                     location.hash = base64;
                     code.disabled = true
                     sbtn.style.display = 'none'
                     cbtn.style.display = 'inline-block';
-                };
-                reader.readAsDataURL(new Blob([new Uint8Array(e)]));
-                });
             }
             function copy() {
                 navigator.clipboard.writeText(window.location.href)
