@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+#code {
+    width: 100%;
+    height: 100%;
+    padding: .5em;
+    border: 0;
+    margin: 0;
+    resize: none;
+    color: #ffffff;
+    background: #000000;
+}
+
+#code-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 2em;
+}
+
+#navbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2em;
+    line-height: 2em;
+    text-align: right;
+    vertical-align: middle;
+    background: #1f1f1f;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+#navbar a {
+    display: inline-block;
+    padding: 0 .5em;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+#navbar a:hover {
+    background: #dadada;
+}   
