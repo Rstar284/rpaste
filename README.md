@@ -3,13 +3,13 @@
 A paste server with an API and website, made in rust
 
 
-## License
+### License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-## Roadmap
+### Roadmap
 
 - get postgres working (eclipse here, dont know shit about what that is)
-## Contributing
+### Contributing
 
 Contributions are always welcome!
 
