@@ -8,7 +8,7 @@ A paste server with an API and website, made in rust
 [MIT](https://choosealicense.com/licenses/mit/)
 ## Roadmap
 
-- [] get postgres working (eclipse here, dont know shit about what that is) (its an DB eclipse smh.)
+- [ ] get postgres working (eclipse here, dont know shit about what that is) (its an DB eclipse smh.)
 ## Contributing
 
 Contributions are always welcome!
