@@ -1,3 +1,8 @@
 # rpaste
-A paste server with an API and website, made in HTML/JS/CSS.
+A pastebin, made in HTML/JS/CSS. (exists at https://rstar284.github.io/rpaste or https://rstar284.tk/rpaste).
 Uses base64 to store the paste, thus making it a no-datastore pastebin :D (links do get big tho, consider using a link shortner).
+
+
+TODO:
+Add highlighting like main branch.
+Add line count. (should be easy tbh)
