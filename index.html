@@ -101,10 +101,10 @@
             const lookupTypeByExtension = function(ext) {return extensionMap[ext] || ext;}
             const addLineNo = function(linecount) {
                 let h = ''
-                for(let i = 0; i < linecount; i++) {h += (i+1).toString() + '<br>'}
+                for(let i = 0; i < linecount; i++) {h += (i+1).toString() + '<br/>'}
                 document.getElementById('linenos').innerHTML = h
             }
-            function escapeHTML(str){return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/"g, '&quot;');}
+            function escapeHTML(str){return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');}
             const b64 = location.hash.substr(1);
             if (b64) {
                         const decoded = atob(b64);
