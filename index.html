@@ -8,7 +8,7 @@
     <style>
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap');
-        * {
+ * {
     box-sizing: border-box;
     font-family: monospace;
     font-family: 'JetBrains Mono', monospace;
@@ -62,11 +62,11 @@
 }
 #linenos {
     color: #ffffff;
-    z-index: 1000;
-	position: absolute;
-	width: 15px;
-	text-align: right;
-	user-select: none;
+    z-index: 9999;
+    position: absolute;
+    width: 15px;
+    text-align: right;
+		user-select: none;
 }   
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
@@ -80,15 +80,6 @@
             cbtn.style.display = 'none';
             sbtn.style.display = 'inline-block';
             code.focus()
-            const extensionMap = {
-            rb: 'ruby', py: 'python', pl: 'perl', php: 'php', scala: 'scala', go: 'go',
-            xml: 'xml', html: 'xml', htm: 'xml', css: 'css', js: 'javascript', vbs: 'vbscript',
-            lua: 'lua', pas: 'delphi', java: 'java', cpp: 'cpp', cc: 'cpp', m: 'objectivec',
-            vala: 'vala', sql: 'sql', sm: 'smalltalk', lisp: 'lisp', ini: 'ini',
-            diff: 'diff', bash: 'bash', sh: 'bash', tex: 'tex', erl: 'erlang', hs: 'haskell',
-            md: 'markdown', txt: '', coffee: 'coffee', swift: 'swift'};
-            const lookupExtensionByType = function(type) {for (let key in extensionMap) {if (extensionMap[key] === type) return key} return type;};
-            const lookupTypeByExtension = function(ext) {return extensionMap[ext] || ext;}
             const addLineNo = function(linecount) {
                 let h = ''
                 for(let i = 0; i < linecount; i++) {h += (i+1).toString() + '<br/>'}
@@ -109,6 +100,7 @@
                     code.disabled = true
                     sbtn.style.display = 'none'
                     cbtn.style.display = 'inline-block';
+										location.reload()
             }
             function copy() {
                 navigator.clipboard.writeText(window.location.href);
