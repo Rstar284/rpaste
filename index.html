@@ -64,6 +64,7 @@
 #linenos {
     color: #ffffff;
     z-index: 1000;
+		overflow-y: hidden;
     position: absolute;
     width: 15px;
     text-align: right;
@@ -83,7 +84,7 @@
             code.focus()
             const addLineNo = function(linecount) {
                 let h = ''
-                for(let i = 0; i < linecount; i++) {h += `${(i+1).toString()}.` + '<br/>'}
+                for(let i = 0; i < linecount; i++) {h += `${(i+1).toString()}.  ` + '<br/>'}
                 document.getElementById('linenos').innerHTML = h
             }
             const b64 = location.hash.substr(1);
