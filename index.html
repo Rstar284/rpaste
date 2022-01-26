@@ -83,7 +83,7 @@
             code.focus()
             const addLineNo = function(linecount) {
                 let h = ''
-                for(let i = 0; i < linecount; i++) {h += (i+1).toString() + '<br/>'}
+                for(let i = 0; i < linecount; i++) {h += `${(i+1).toString()}.` + '<br/>'}
                 document.getElementById('linenos').innerHTML = h
             }
             const b64 = location.hash.substr(1);
