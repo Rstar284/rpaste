@@ -117,16 +117,15 @@
                         code.disabled = true
 												code.style.display = 'none';
 												code2.style.display = 'block'
-		    								code2.innerText = escapeHTML(decoded)
+		    								code2.innerHTML = escapeHTML(decoded)
                         sbtn.style.display = 'none';
                         cbtn.style.display = 'inline-block';
 												const params = new URLSearchParams(window.location.search);
             						if(params.has('lang')) {
                 					if(params.get('lang') === null || params.get('lang') === "")  return
                 					const lang = params.get('lang').toLowerCase()
-                					const codeh = hljs.highlight(decoded, {language: lookupTypeByExtension(lang), ignoreIllegals: true}).value
-                					code2.innerHTML = codeh
-                					document.title = lang ? "Rpaste - Base64 - " + lang : "Rpaste";
+                					code2.innerHTML = hljs.highlight(decoded, {language: lookupTypeByExtension(lang), ignoreIllegals: true}).value
+                					document.title = lang ? "Rpaste - Base64 - " + lang : "TXT";
                 					return
             						} else {
                 					hljs.highlightElement(code2)
