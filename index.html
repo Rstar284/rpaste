@@ -112,7 +112,7 @@
             const b64 = location.hash.substr(1);
             if (b64) {
                         const decoded = atob(b64);
-                        // addLineNo(decoded.split('\n').length);
+                        addLineNo(decoded.split('\n').length);
                         code.disabled = true
 												code.style.display = 'none';
 												code2.style.display = 'block'
