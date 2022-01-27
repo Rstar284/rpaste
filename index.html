@@ -36,7 +36,6 @@
         background: #000000;
         display: none;
         overflow-y: scroll;
-        padding-left: 20px;
       }
 
       #code-wrapper {
@@ -96,13 +95,6 @@
         sbtn.style.display = 'inline-block';
         code.focus();
         code2.style.display = 'none';
-        function addLineNo(linecount) {
-          let h = '';
-          for (let i = 0; i < linecount; i++) {
-            h += (i + 1).toString() + '<br/>';
-          }
-          document.getElementById('linenos').innerHTML = h;
-        }
         function escapeHTML(str) {
           return str
             .replace(/&/g, '&amp;')
@@ -151,7 +143,6 @@
         const b64 = location.hash.substr(1);
         if (b64) {
           const decoded = atob(b64);
-          addLineNo(decoded.split('\n').length);
           code.disabled = true;
           code.style.display = 'none';
           code2.style.display = 'block';
@@ -190,10 +181,6 @@
         }
         sbtn.addEventListener('click', save);
         cbtn.addEventListener('click', copy);
-        code2.addEventListener('scroll', () => {
-          let y_pos = code2.scrollTop;
-          document.getElementById('linenos').scrollTo(y_pos, 0);
-        });
       });
     </script>
   </head>
