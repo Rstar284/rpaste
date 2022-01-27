@@ -102,6 +102,14 @@
                 document.getElementById('linenos').innerHTML = h
             }
 						function escapeHTML(str){return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');}
+						const extensionMap = {
+            rb: 'ruby', py: 'python', pl: 'perl', php: 'php', scala: 'scala', go: 'go',
+            xml: 'xml', html: 'xml', htm: 'xml', css: 'css', js: 'javascript', vbs: 'vbscript',
+            lua: 'lua', pas: 'delphi', java: 'java', cpp: 'cpp', cc: 'cpp', m: 'objectivec',
+            vala: 'vala', sql: 'sql', sm: 'smalltalk', lisp: 'lisp', ini: 'ini',
+            diff: 'diff', bash: 'bash', sh: 'bash', tex: 'tex', erl: 'erlang', hs: 'haskell',
+            md: 'markdown', txt: '', coffee: 'coffee', swift: 'swift'};
+						const lookupTypeByExtension = function(ext) {return extensionMap[ext] || ext;}
             const b64 = location.hash.substr(1);
             if (b64) {
                         const decoded = atob(b64);
@@ -112,6 +120,18 @@
 		    								code2.innerText = escapeHTML(decoded)
                         sbtn.style.display = 'none';
                         cbtn.style.display = 'inline-block';
+												const params = new URLSearchParams(window.location.search);
+            						if(params.has('lang')) {
+                					if(params.get('lang') === null || params.get('lang') === "")  return
+                					const lang = params.get('lang').toLowerCase()
+                					const codeh = hljs.highlight(decoded, {language: lookupTypeByExtension(lang), ignoreIllegals: true}).value
+                					code2.innerHTML = codeh
+                					document.title = lang ? "Rpaste - Base64 - " + lang : "Rpaste";
+                					return
+            						} else {
+                					hljs.highlightElement(code)
+                					return
+            						}
             }
             function save() {
                     const base64 = btoa(code.value)
