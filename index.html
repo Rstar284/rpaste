@@ -90,7 +90,7 @@
             const b64 = location.hash.substr(1);
             if (b64) {
                         const decoded = atob(b64);
-                        addLineNo(decoded.split('\n').length);
+                        // addLineNo(decoded.split('\n').length);
                         code.disabled = true
                         sbtn.style.display = 'none';
                         cbtn.style.display = 'inline-block';
