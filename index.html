@@ -96,11 +96,12 @@
             sbtn.style.display = 'inline-block';
             code.focus()
 						code2.style.display = 'none'
-            const addLineNo = function(linecount) {
+            function addLineNo(linecount) {
                 let h = ''
                 for(let i = 0; i < linecount; i++) {h += `${(i+1).toString()}.  ` + '<br/>'}
                 document.getElementById('linenos').innerHTML = h
             }
+						function escapeHTML(str){return str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');}
             const b64 = location.hash.substr(1);
             if (b64) {
                         const decoded = atob(b64);
@@ -108,7 +109,7 @@
                         code.disabled = true
 												code.style.display = 'none';
 												code2.style.display = 'block'
-		    								code2.innerText = decoded
+		    								code2.innerText = escapeHTML(decoded)
                         sbtn.style.display = 'none';
                         cbtn.style.display = 'inline-block';
             }
