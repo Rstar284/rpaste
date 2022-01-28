@@ -94,7 +94,6 @@
 				code.disabled = false
 				cbtn.style.display = 'none'
 				sbtn.style.display = 'inline-block'
-				clbtn.style.display = 'none'
 				code.focus()
 				code2.style.display = 'none'
 				function escapeHTML(str) {
@@ -151,7 +150,6 @@
 					code2.innerHTML = escapeHTML(decoded)
 					sbtn.style.display = 'none'
 					cbtn.style.display = 'inline-block'
-					clbtn.style.display = 'inline-block'
 					const params = new URLSearchParams(window.location.search)
 					if (params.has('lang')) {
 						if (params.get('lang') === null || params.get('lang') === '') return
@@ -175,7 +173,6 @@
 					code2.style.display = 'block'
 					sbtn.style.display = 'none'
 					cbtn.style.display = 'inline-block'
-					clbtn.style.display = 'inline-block'
 					location.reload()
 				}
 				function copy() {
@@ -190,7 +187,6 @@
 				}
 				sbtn.addEventListener('click', save)
 				cbtn.addEventListener('click', copy)
-				clbtn.addEventListener('click', rmlink)
 			})
 		</script>
 	</head>
@@ -201,7 +197,7 @@
 			<pre id="code2" tabindex="0" spellcheck="false" class="hljs"></pre>
 		</div>
 		<div id="navbar">
-			<a id="clbtn">Clear</a><a id="sbtn">Save Paste</a
+			<a id="sbtn">Save Paste</a
 			><a id="cbtn">Copy Link</a>
 		</div>
 	</body>
