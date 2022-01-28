@@ -182,7 +182,7 @@
 					navigator.clipboard.writeText(window.location.href)
 					alert('Copied to clipboard!')
 				}
-				function clear() {
+				function rmlink() {
 					window.location.href = window.location.href.substring(
 						0,
 						window.location.href.indexOf('#')
@@ -190,7 +190,7 @@
 				}
 				sbtn.addEventListener('click', save)
 				cbtn.addEventListener('click', copy)
-				clbtn.addEventListener('click', clear)
+				clbtn.addEventListener('click', rmlink)
 			})
 		</script>
 	</head>
