@@ -184,7 +184,7 @@
           alert('Copied to clipboard!');
         }
         function clear() {
-          window.location.href = window.location.origin
+          window.location.href = window.location.href.substring(0, window.location.href.indexOf('#'))
         }
         sbtn.addEventListener('click', save);
         cbtn.addEventListener('click', copy);
