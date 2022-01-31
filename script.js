@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         settingsModal.style.display = 'block'
         code.style.display = 'none'
         code2.style.display = 'none'
-        fontSizeCode.innerHTML = hljs.highlight('console.log("Code uwu") // uwu', {language: 'js'}).value
+        fontSizeCode.innerHTML = hljs.highlight('console.log("Hewwo!")', {language: 'js'}).value
     }
 
     function copy() {
