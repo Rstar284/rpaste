@@ -7,4 +7,5 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 TODO:
 - [x] ~~Add highlighting like main branch.~~
 - [ ] Add line count.
-Thanks too @Just-a-Unity-Dev for his [extension :D](https://github.com/Just-a-Unity-Dev/rpaster.git)
+
+# Thanks too @Just-a-Unity-Dev for his [extension :D](https://github.com/Just-a-Unity-Dev/rpaster.git)
