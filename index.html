@@ -5,200 +5,21 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Rpaste - Base64</title>
-		<style>
-			@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap');
-			* {
-				box-sizing: border-box;
-				font-family: monospace;
-				font-family: 'JetBrains Mono', monospace;
-				font-size: 16px;
-			}
-
-			#code {
-				width: 100%;
-				height: 100%;
-				padding: 0.5em;
-				border: 0;
-				margin: 0;
-				resize: none;
-				color: #ffffff;
-				background: #000000;
-				overflow-y: scroll;
-			}
-
-			#code2 {
-				width: 100%;
-				height: 100%;
-				padding: 0.5em;
-				border: 0;
-				margin: 0;
-				color: #ffffff;
-				background: #000000;
-				display: none;
-				overflow-y: scroll;
-			}
-
-			#code-wrapper {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 2em;
-			}
-
-			#navbar {
-				position: absolute;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				height: 2em;
-				line-height: 2em;
-				text-align: right;
-				vertical-align: middle;
-				background: #1f1f1f;
-				color: #ffffff;
-				white-space: nowrap;
-			}
-
-			#navbar a {
-				display: inline-block;
-				padding: 0 0.5em;
-				text-decoration: none;
-				color: inherit;
-				cursor: pointer;
-			}
-
-			#navbar a:hover {
-				background: #dadada;
-			}
-			#linenos {
-				color: #ffffff;
-				position: absolute;
-				text-align: right;
-				user-select: none;
-				z-index: 1000;
-			}
-		</style>
+		<link rel="stylesheet" href="style.css" />
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/atom-one-dark.min.css"
 		/>
 		<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.js"></script>
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				const sbtn = document.getElementById('sbtn')
-				const cbtn = document.getElementById('cbtn')
-				const clbtn = document.getElementById('clbtn')
-				const code = document.getElementById('code')
-				const code2 = document.getElementById('code2')
-				code.disabled = false
-				cbtn.style.display = 'none'
-				sbtn.style.display = 'inline-block'
-				code.focus()
-				code2.style.display = 'none'
-				function escapeHTML(str) {
-					return str
-						.replace(/&/g, '&amp;')
-						.replace(/>/g, '&gt;')
-						.replace(/</g, '&lt;')
-						.replace(/"/g, '&quot;')
-				}
-				const extensionMap = {
-					rb: 'ruby',
-					py: 'python',
-					pl: 'perl',
-					php: 'php',
-					scala: 'scala',
-					go: 'go',
-					xml: 'xml',
-					html: 'xml',
-					htm: 'xml',
-					css: 'css',
-					js: 'javascript',
-					vbs: 'vbscript',
-					lua: 'lua',
-					pas: 'delphi',
-					java: 'java',
-					cpp: 'cpp',
-					cc: 'cpp',
-					m: 'objectivec',
-					vala: 'vala',
-					sql: 'sql',
-					sm: 'smalltalk',
-					lisp: 'lisp',
-					ini: 'ini',
-					diff: 'diff',
-					bash: 'bash',
-					sh: 'bash',
-					tex: 'tex',
-					erl: 'erlang',
-					hs: 'haskell',
-					md: 'markdown',
-					txt: '',
-					coffee: 'coffee',
-					swift: 'swift',
-				}
-				const lookupTypeByExtension = function (ext) {
-					return extensionMap[ext] || ext
-				}
-				const b64 = location.hash.substr(1)
-				if (b64) {
-					const decoded = atob(b64)
-					code.disabled = true
-					code.style.display = 'none'
-					code2.style.display = 'block'
-					code2.innerHTML = escapeHTML(decoded)
-					sbtn.style.display = 'none'
-					cbtn.style.display = 'inline-block'
-					const params = new URLSearchParams(window.location.search)
-					if (params.has('lang')) {
-						if (params.get('lang') === null || params.get('lang') === '') return
-						const lang = params.get('lang').toLowerCase()
-						code2.innerHTML = hljs.highlight(decoded, {
-							language: lookupTypeByExtension(lang),
-							ignoreIllegals: true,
-						}).value
-						document.title = lang ? 'Rpaste - Base64 - ' + lang : 'TXT'
-						return
-					} else {
-						hljs.highlightElement(code2)
-						return
-					}
-				}
-				function save() {
-					const base64 = btoa(code.value)
-					location.hash = base64
-					code.disabled = true
-					code.style.display = 'none'
-					code2.style.display = 'block'
-					sbtn.style.display = 'none'
-					cbtn.style.display = 'inline-block'
-					location.reload()
-				}
-				function copy() {
-					navigator.clipboard.writeText(window.location.href)
-					alert('Copied to clipboard!')
-				}
-				function rmlink() {
-					window.location.href = window.location.href.substring(
-						0,
-						window.location.href.indexOf('#')
-					)
-				}
-				sbtn.addEventListener('click', save)
-				cbtn.addEventListener('click', copy)
-			})
-		</script>
+		<script src="script.js"></script>
 	</head>
 	<body>
-		<div id="linenos"></div>
 		<div id="code-wrapper">
 			<textarea id="code" spellcheck="false" disabled="false"></textarea>
 			<pre id="code2" tabindex="0" spellcheck="false" class="hljs"></pre>
 		</div>
 		<div id="navbar">
-			<a id="sbtn">Save Paste</a
-			><a id="cbtn">Copy Link</a>
+			<a id="sbtn">Save Paste</a><a id="cbtn">Copy Link</a>
 		</div>
 	</body>
 </html>
