@@ -5,6 +5,7 @@
     --color-secondary: #31353f;
     --color-accent: #393f4a;
     --color-hover: #3b3f4c;
+    --color-shadow: #202020;
     --font-color: #abb2bf;
 }
 
@@ -13,6 +14,7 @@
     --color-secondary: #f0f0f0;
     --color-accent: #e6e6e6;
     --color-hover: #dcdcdc;
+    --color-shadow: #dbdbdb;
     --font-color: #383a42;
 }
 
@@ -96,5 +98,5 @@ body {
     right: 2rem;
     bottom: 4rem;
     border-radius: 1rem;
-    box-shadow: rgba(32, 32, 32, 0.2) 0 0 0.4rem;
+    box-shadow: var(--color-shadow) 0 0 0.4rem;
 }
