@@ -37,8 +37,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if(localStorage.getItem('fontSize') === null) {
             fontSizeCode.style.fontSize = '16px'
             fontSizeVal.innerHTML = '16px'
+        } else {
+            code.style.fontSize = localStorage.getItem('fontSize').toString()+'px'
+            code2.style.fontSize = localStorage.getItem('fontSize').toString()+'px'
+            fontSizeVal.innerHTML = localStorage.getItem('fontSize')
+            fontSizeCode.style.fontSize = localStorage.getItem('fontSize').toString()+'px'
         }
-    })
+    })()
 
     themebox.addEventListener('change', toggleTheme, false)
     fontSizeSlider.addEventListener('input', function () {
@@ -56,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         settingsModal.style.display = 'block'
         code.style.display = 'none'
         code2.style.display = 'none'
-        fontSizeCode.innerHTML = hljs.highlight('console.log("Hewwo!")', {language: 'js'}).value
+        fontSizeCode.innerHTML = hljs.highlight('console.log("Hello!")', {language: 'js'}).value
     }
 
     function copy() {
