@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const code = document.getElementById('code')
     const code2 = document.getElementById('code2')
     const settingsModal = document.getElementById('settingsModal')
-    const themebtn = document.getElementById('theme')
+    const themebox = document.getElementById('theme')
+    const fontSizeSlider = document.getElementById('fontSize')
+    const fontSizeVal = document.getElementById('fontSizeVal')
+    const fontSizeCode = document.getElementById('fontSizeCode')
 
     code.disabled = false
     cbtn.style.display = 'none'
@@ -30,8 +33,21 @@ document.addEventListener('DOMContentLoaded', function () {
             setTheme('light');
         }
     })();
+    (function () {
+        if(localStorage.getItem('fontSize') === null) {
+            fontSizeCode.style.fontSize = '16px'
+            fontSizeVal.innerHTML = '16px'
+        }
+    })
 
-    themebtn.onclick = toggleTheme
+    themebox.addEventListener('change', toggleTheme, false)
+    fontSizeSlider.addEventListener('input', function () {
+        fontSizeVal.innerHTML = this.value
+        fontSizeCode.style.fontSize = this.value + 'px'
+    })
+    fontSizeSlider.addEventListener('change', function () {
+        localStorage.setItem('fontSize', this.value)
+    })
 
     const params = new URLSearchParams(window.location.search)
     if(params.has('settings')) {
@@ -40,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         settingsModal.style.display = 'block'
         code.style.display = 'none'
         code2.style.display = 'none'
+        fontSizeCode.innerHTML = hljs.highlight('console.log("Code uwu") // uwu', {language: 'js'}).value
     }
 
     function copy() {

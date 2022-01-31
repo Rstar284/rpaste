@@ -22,11 +22,11 @@
     box-sizing: border-box;
     font-family: monospace;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
 }
 
 body {
     background-color: var(--color-primary);
+    font-size: 16px;
 }
 
 #code {
@@ -100,3 +100,57 @@ body {
     border-radius: 1rem;
     box-shadow: var(--color-shadow) 0 0 0.4rem;
 }
+
+.switch {
+    display: inline-block;
+    height: 2rem;
+    position: relative;
+    width: 4rem;
+    top: 0.5rem;
+  }
+  
+  .switch input {
+    display:none;
+  }
+  
+  .slider {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    cursor: pointer;
+    position: absolute;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    background-color: #fff;
+    bottom: 0.25rem;
+    content: "";
+    height: 1.5rem;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 1.5rem;
+  }
+  
+  #theme:checked + .slider {
+    background-color: #66bb6a;
+  }
+  
+  #theme:checked + .slider:before {
+    transform: translateX(2rem);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .label {
+    font-size: 25px;
+  }
