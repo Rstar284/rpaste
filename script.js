@@ -3,13 +3,55 @@ document.addEventListener('DOMContentLoaded', function () {
     const cbtn = document.getElementById('cbtn')
     const code = document.getElementById('code')
     const code2 = document.getElementById('code2')
-    function copy() {navigator.clipboard.writeText(window.location.href).then(function () {alert('Copied to clipboard!')})}
-    cbtn.addEventListener('click', copy)
+    const settingsModal = document.getElementById('settingsModal')
+    const themebtn = document.getElementById('theme')
+
     code.disabled = false
     cbtn.style.display = 'none'
     sbtn.style.display = 'inline-block'
     code.focus()
     code2.style.display = 'none'
+
+    function setTheme(themeName) {
+        localStorage.setItem('theme', themeName);
+        document.documentElement.className = themeName;
+    }
+    function toggleTheme() {
+        if (localStorage.getItem('theme') === 'dark') {
+            setTheme('light');
+        } else {
+            setTheme('dark');
+        }
+    }
+    (function () {
+        if (localStorage.getItem('theme') === 'dark') {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+    })();
+
+    themebtn.onclick = toggleTheme
+
+    const params = new URLSearchParams(window.location.search)
+    if(params.has('settings')) {
+        code.disabled = true
+        sbtn.style.display = 'none'
+        settingsModal.style.display = 'block'
+        code.style.display = 'none'
+        code2.style.display = 'none'
+    }
+
+    function copy() {
+        navigator.clipboard.writeText(window.location.href).then(function () {alert('Copied to clipboard!')})
+    }
+    cbtn.addEventListener('click', copy)
+    function save() {
+        const base64 = btoa(code.value)
+        location.hash = base64
+        location.reload()
+    }
+    sbtn.addEventListener('click', save)
     function escapeHTML(str) {
         return str
             .replace(/&/g, '&amp;')
@@ -64,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
         code2.innerHTML = escapeHTML(decoded)
         sbtn.style.display = 'none'
         cbtn.style.display = 'inline-block'
-        const params = new URLSearchParams(window.location.search)
         if (params.has('lang')) {
             if (params.get('lang') === null || params.get('lang') === '') return
             const lang = params.get('lang').toLowerCase()
@@ -72,18 +113,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 language: lookupTypeByExtension(lang),
                 ignoreIllegals: true,
             }).value
-            document.title = lang ? 'Rpaste - Base64 - ' + lang : 'TXT'
+            document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt'
             return
         } else {
             hljs.highlightElement(code2)
             return
         }
     }
-    function save() {
-        const base64 = btoa(code.value)
-        location.hash = base64
-        location.reload()
-    }
-    sbtn.addEventListener('click', save)
-    
 })

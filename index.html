@@ -13,11 +13,14 @@
 		<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.js"></script>
 		<script src="script.js"></script>
 	</head>
-	<body>
+	<body class="theme-dark">
 		<div id="code-wrapper">
 			<textarea id="code" spellcheck="false" disabled="false"></textarea>
 			<pre id="code2" tabindex="0" spellcheck="false" class="hljs"></pre>
 		</div>
+		<div id="settingsModal" style="display: none;">
+			<label"><button id="theme">Switch Theme</a></label>
+			</div>
 		<div id="navbar">
 			<a id="sbtn">Save Paste</a><a id="cbtn">Copy Link</a>
 		</div>
