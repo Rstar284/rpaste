@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log("Hello. Why u look at console SMH?");
     console.log("UwU OwO UwU OwO UwU OwO UwU");
+	console.log("https://rstar284.tk/rpaste/?lang=txt#RXhjdXNlIG1lPwpXaHkgYXJlIHUgaGVyZT8KPz8/Pz8/PwpTbWggd2VpcmRvLg==");
 
 	code.disabled = false;
 	cbtn.style.display = 'none';
