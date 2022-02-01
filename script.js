@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const sbtn = document.getElementById('sbtn')
     const cbtn = document.getElementById('cbtn')
+    const sebtn = document.getElementById('sebtn')
+    const gbbtn = document.getElementById('gbbtn')
     const code = document.getElementById('code')
     const code2 = document.getElementById('code2')
     const settingsModal = document.getElementById('settingsModal')
@@ -12,8 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
     code.disabled = false
     cbtn.style.display = 'none'
     sbtn.style.display = 'inline-block'
+    sebtn.style.display = 'inline-block'
+    gbbtn.style.display = 'none'
     code.focus()
     code2.style.display = 'none'
+
+    const b64 = location.hash.substr(1)
 
     function setTheme(themeName) {
         localStorage.setItem('theme', themeName);
@@ -22,26 +28,32 @@ document.addEventListener('DOMContentLoaded', function () {
     function toggleTheme() {
         if (localStorage.getItem('theme') === 'dark') {
             setTheme('light');
+            themebox.checked = false;
         } else {
             setTheme('dark');
+            themebox.checked = true;
         }
     }
     (function () {
         if (localStorage.getItem('theme') === 'dark') {
             setTheme('dark');
+            themebox.checked = true;
         } else {
             setTheme('light');
+            themebox.checked = false;
         }
     })();
     (function () {
         if(localStorage.getItem('fontSize') === null) {
             fontSizeCode.style.fontSize = '16px'
             fontSizeVal.innerHTML = '16px'
+            fontSizeSlider.value = 16
         } else {
             code.style.fontSize = localStorage.getItem('fontSize').toString()+'px'
             code2.style.fontSize = localStorage.getItem('fontSize').toString()+'px'
             fontSizeVal.innerHTML = localStorage.getItem('fontSize')
             fontSizeCode.style.fontSize = localStorage.getItem('fontSize').toString()+'px'
+            fontSizeSlider.value = localStorage.getItem('fontSize')
         }
     })()
 
@@ -53,7 +65,17 @@ document.addEventListener('DOMContentLoaded', function () {
     fontSizeSlider.addEventListener('change', function () {
         localStorage.setItem('fontSize', this.value)
     })
-
+    function goToSettings() {
+        let settingsURL;
+        if (b64) {settingsURL = window.location.href.replace(window.location.hash, '')+'?settings'; window.location.href = settingsURL + '#' + b64}
+        else {settingsURL = window.location.href ; window.location.href = settingsURL+'?settings'}
+    }
+    function goBack(){
+        const backURL = window.location.href.replace('?settings', '')
+        window.location.href = backURL
+    }
+    sebtn.addEventListener('click', goToSettings, false)
+    gbbtn.addEventListener('click', goBack, false)
     const params = new URLSearchParams(window.location.search)
     if(params.has('settings')) {
         code.disabled = true
@@ -62,6 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
         code.style.display = 'none'
         code2.style.display = 'none'
         fontSizeCode.innerHTML = hljs.highlight('console.log("Hello!")', {language: 'js'}).value
+        gbbtn.style.display = 'inline-block'
+        sebtn.style.display = 'none'
     }
 
     function copy() {
@@ -119,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const lookupTypeByExtension = function (ext) {
         return extensionMap[ext] || ext
     }
-    const b64 = location.hash.substr(1)
     if (b64) {
         const decoded = atob(b64)
         code.disabled = true
