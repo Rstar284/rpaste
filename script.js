@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const cbtn = document.getElementById('cbtn');
 	const sebtn = document.getElementById('sebtn');
 	const gbbtn = document.getElementById('gbbtn');
+	const cpbtn = document.getElementById('rbtn');
 	const code = document.getElementById('code');
 	const code2 = document.getElementById('code2');
 	const settingsModal = document.getElementById('settingsModal');
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	sbtn.style.display = 'inline-block';
 	sebtn.style.display = 'inline-block';
 	gbbtn.style.display = 'none';
+	cpbtn.style.display = 'none';
 	code.focus();
 	code2.style.display = 'none';
 
@@ -62,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	})();
 
 	themebox.addEventListener('change', toggleTheme, false);
-	fontSizeSlider.addEventListener('input', function () {
+	fontSizeSlider.addEventListener('input', function () {	
 		fontSizeVal.innerHTML = this.value;
 		fontSizeCode.style.fontSize = this.value + 'px';
 	});
@@ -86,6 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 	sebtn.addEventListener('click', goToSettings, false);
 	gbbtn.addEventListener('click', goBack, false);
+	function copyPaste() {
+		navigator.clipboard.writeText(code2.innerText).then(function() {
+			alert('Copied Content to clipboard!');
+		})
+	}
+	cpbtn.addEventListener('click', copyPaste, false);
 	const params = new URLSearchParams(window.location.search);
 	if (params.has('settings')) {
 		code.disabled = true;
@@ -102,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	function copy() {
 		navigator.clipboard.writeText(window.location.href).then(function () {
-			alert('Copied to clipboard!');
+			alert('Copied Link to clipboard!');
 		});
 	}
 	cbtn.addEventListener('click', copy);
@@ -173,6 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		code2.innerHTML = escapeHTML(decoded);
 		sbtn.style.display = 'none';
 		cbtn.style.display = 'inline-block';
+		cpbtn.style.display = 'inline-block';
 		if (params.has('lang')) {
 			if (params.get('lang') === null || params.get('lang') === '') return;
 			const lang = params.get('lang').toLowerCase();
