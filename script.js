@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	cbtn.style.display = 'none';
 	sbtn.style.display = 'inline-block';
 	sebtn.style.display = 'inline-block';
-	gbbtn.style.display = 'none';
 	cpbtn.style.display = 'none';
+	gbbtn.style.display = 'inline-block';
 	code.focus();
 	code2.style.display = 'none';
 
@@ -84,8 +84,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 	function goBack() {
-		const backURL = window.location.href.replace('?settings', '');
-		window.location.href = backURL;
+		let backURL;
+		if(window.location.href.indexOf('?settings') > -1) {
+			backURL = window.location.href.replace('?settings', '');
+			window.location.href = backURL;
+		} else {
+			backURL = window.location.href.replace(window.location.hash, '');
+			window.location.href = backURL;
+			window.location.reload();
+		}
 	}
 	sebtn.addEventListener('click', goToSettings, false);
 	gbbtn.addEventListener('click', goBack, false);
@@ -105,7 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		fontSizeCode.innerHTML = hljs.highlight('console.log("Hello!")', {
 			language: 'js',
 		}).value;
-		gbbtn.style.display = 'inline-block';
 		sebtn.style.display = 'none';
 	}
 
