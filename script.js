@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	(function () {
 		if (localStorage.getItem('fontSize') === null) {
 			fontSizeCode.style.fontSize = '16px';
-			fontSizeVal.innerHTML = '16px';
+			fontSizeVal.innerHTML = '16';
 			fontSizeSlider.value = 16;
 		} else {
 			code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
