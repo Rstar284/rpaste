@@ -128,6 +128,23 @@ document.addEventListener('DOMContentLoaded', function () {
 			e.preventDefault();
 			save();
 		}
+		if (e.ctrlKey && e.shiftKey && key === 'L') {
+			e.preventDefault();
+			copy();
+		}
+		if (e.ctrlKey && e.shiftKey && key === 'C') {
+			e.preventDefault();
+			copyPaste();
+		}
+		if (e.ctrlKey && e.shiftKey && key === 'S') {
+			e.preventDefault();
+			if(params.has('settings')) {return;}
+			goToSettings();
+		}
+		if (e.ctrlKey && key === 'ArrowLeft') {
+			e.preventDefault();
+			goBack();
+		}
 	});
 	function escapeHTML(str) {
 		return str
