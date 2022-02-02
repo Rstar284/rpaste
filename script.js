@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		} else {
 			backURL = window.location.href.replace(window.location.hash, '');
 			window.location.href = backURL;
-			window.location.reload();
 		}
 	}
 	sebtn.addEventListener('click', goToSettings, false);
