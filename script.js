@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	(function () {
 		if (localStorage.getItem('fontSize') === null) {
 			fontSizeCode.style.fontSize = '16px';
-			fontSizeVal.innerHTML = '16';
+			fontSizeVal.innerHTML = '16px';
 			fontSizeSlider.value = 16;
 		} else {
 			code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
 			code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-			fontSizeVal.innerHTML = localStorage.getItem('fontSize');
+			fontSizeVal.innerHTML = localStorage.getItem('fontSize')+'px';
 			fontSizeCode.style.fontSize =
 				localStorage.getItem('fontSize').toString() + 'px';
 			fontSizeSlider.value = localStorage.getItem('fontSize');
