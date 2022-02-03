@@ -83,75 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			window.location.href = settingsURL + '?settings';
 		}
 	}
-<<<<<<< HEAD
-})
-const escapeHTML = (str) => {
-	return str
-		.replace(/&/g, '&amp;')
-		.replace(/>/g, '&gt;')
-		.replace(/</g, '&lt;')
-		.replace(/"/g, '&quot;')
-}
-const extensionMap = {
-	rb: 'ruby',
-	py: 'python',
-	pl: 'perl',
-	php: 'php',
-	scala: 'scala',
-	go: 'go',
-	xml: 'xml',
-	html: 'xml',
-	htm: 'xml',
-	css: 'css',
-	js: 'javascript',
-	vbs: 'vbscript',
-	lua: 'lua',
-	pas: 'delphi',
-	java: 'java',
-	cpp: 'cpp',
-	cc: 'cpp',
-	m: 'objectivec',
-	vala: 'vala',
-	sql: 'sql',
-	sm: 'smalltalk',
-	lisp: 'lisp',
-	ini: 'ini',
-	diff: 'diff',
-	bash: 'bash',
-	sh: 'bash',
-	tex: 'tex',
-	erl: 'erlang',
-	hs: 'haskell',
-	md: 'markdown',
-	txt: '',
-	coffee: 'coffee',
-	swift: 'swift',
-}
-const lookupTypeByExtension = (ext) => {
-	return extensionMap[ext] || ext
-}
-if (b64) {
-	const decoded = atob(b64)
-	code.disabled = true
-	code.style.display = 'none'
-	code2.style.display = 'block'
-	code2.innerHTML = escapeHTML(decoded)
-	sbtn.style.display = 'none'
-	cbtn.style.display = 'inline-block'
-	cpbtn.style.display = 'inline-block'
-	if (params.has('lang')) {
-		if (params.get('lang') === null || params.get('lang') === '') {return}
-		const lang = params.get('lang').toLowerCase()
-		code2.innerHTML = hljs.highlight(decoded, {
-			language: lookupTypeByExtension(lang),
-			ignoreIllegals: true,
-		}).value
-		document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt'
-		return
-	} else {
-		hljs.highlightElement(code2)
-		return
-=======
 	function goBack() {
 		let backURL;
 		if(window.location.href.indexOf('?settings') > -1) {
@@ -161,7 +92,6 @@ if (b64) {
 			backURL = window.location.href.replace(window.location.hash, '');
 			window.location.href = backURL;
 		}
->>>>>>> parent of da14999 (refactor)
 	}
 	sebtn.addEventListener('click', goToSettings, false);
 	gbbtn.addEventListener('click', goBack, false);
