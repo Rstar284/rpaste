@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				ignoreIllegals: true,
 			}).value;
 			document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt';
+			document.head.querySelector('meta[name="title"]').content = lang ? "Rpaste - Base64 - " + lang : "txt";
 			return;
 		} else {
 			hljs.highlightElement(code2);
