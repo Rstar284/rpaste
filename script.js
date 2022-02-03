@@ -209,7 +209,7 @@ if (b64) {
 	cbtn.style.display = 'inline-block'
 	cpbtn.style.display = 'inline-block'
 	if (params.has('lang')) {
-		if (params.get('lang') === null || params.get('lang') === '') return
+		if (params.get('lang') === null || params.get('lang') === '') {return}
 		const lang = params.get('lang').toLowerCase()
 		code2.innerHTML = hljs.highlight(decoded, {
 			language: lookupTypeByExtension(lang),
