@@ -2,6 +2,7 @@
 # rpaste
 A paste server with an API and website, made in rust
 
+https://rstar284.tk/rpaste/
 
 ## License
 
