@@ -6,5 +6,9 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 
 TODO:
 - [ ] Add line count. CSS is weird.
+- [ ] Font selection
+- [ ] Theme selection
+- [ ] Send to Gist
+- [ ] QR Code gen, for mobile sharing
 
 # Thanks too @Just-a-Unity-Dev for his [extension :D](https://github.com/Just-a-Unity-Dev/rpaster.git)
