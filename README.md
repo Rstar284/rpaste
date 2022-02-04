@@ -10,6 +10,7 @@ https://rstar284.tk/rpaste/
 ## Roadmap
 
 - [ ] get postgres working (eclipse here, dont know shit about what that is) (its an DB eclipse smh.)
+- [ ] Get everything from the base64 branch working here.
 ## Contributing
 
 Contributions are always welcome!
