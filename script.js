@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
+'use strict';
+document.addEventListener('DOMContentLoaded', async function () {
 	const sbtn = document.getElementById('sbtn');
 	const cbtn = document.getElementById('cbtn');
 	const sebtn = document.getElementById('sebtn');
@@ -12,9 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	const fontSizeVal = document.getElementById('fontSizeVal');
 	const fontSizeCode = document.getElementById('fontSizeCode');
 
-    console.log("Hello. Why u look at console SMH?");
-    console.log("UwU OwO UwU OwO UwU OwO UwU");
-	console.log("https://rstar284.tk/rpaste/?lang=txt#RXhjdXNlIG1lPwpXaHkgYXJlIHUgaGVyZT8KPz8/Pz8/PwpTbWggd2VpcmRvLg==");
+	console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
 	code.disabled = false;
 	cbtn.style.display = 'none';
@@ -26,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	code2.style.display = 'none';
 
 	const b64 = location.hash.substr(1);
+	const params = new URLSearchParams(window.location.search);
 
 	function setTheme(themeName) {
 		localStorage.setItem('theme', themeName);
@@ -41,7 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 	(function () {
-		if (localStorage.getItem('theme') === 'dark') {
+		if (localStorage.getItem('theme') === null) {
+			setTheme('dark');
+			themebox.checked = true;
+		} else if (localStorage.getItem('theme') === 'dark') {
 			setTheme('dark');
 			themebox.checked = true;
 		} else {
@@ -52,12 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	(function () {
 		if (localStorage.getItem('fontSize') === null) {
 			fontSizeCode.style.fontSize = '16px';
-			fontSizeVal.innerHTML = '16px';
+			fontSizeVal.textContent = '16px';
 			fontSizeSlider.value = 16;
 		} else {
 			code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
 			code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-			fontSizeVal.innerHTML = localStorage.getItem('fontSize')+'px';
+			fontSizeVal.textContent = localStorage.getItem('fontSize') + 'px';
 			fontSizeCode.style.fontSize =
 				localStorage.getItem('fontSize').toString() + 'px';
 			fontSizeSlider.value = localStorage.getItem('fontSize');
@@ -65,63 +68,56 @@ document.addEventListener('DOMContentLoaded', function () {
 	})();
 
 	themebox.addEventListener('change', toggleTheme, false);
-	fontSizeSlider.addEventListener('input', function () {	
-		fontSizeVal.innerHTML = this.value;
+	fontSizeSlider.addEventListener('input', function () {
+		fontSizeVal.textContent = this.value + 'px';
 		fontSizeCode.style.fontSize = this.value + 'px';
 	});
 	fontSizeSlider.addEventListener('change', function () {
 		localStorage.setItem('fontSize', this.value);
 	});
 	function goToSettings() {
-		let settingsURL;
-		if (b64) {
-			settingsURL =
-				window.location.href.replace(window.location.hash, '') + '?settings';
-			window.location.href = settingsURL + '#' + b64;
-		} else {
-			settingsURL = window.location.href;
-			window.location.href = settingsURL + '?settings';
-		}
+		params.append('settings', '');
+		window.location.search = params.toString();
 	}
 	function goBack() {
-		let backURL;
-		if(window.location.href.indexOf('?settings') > -1) {
-			backURL = window.location.href.replace('?settings', '');
-			window.location.href = backURL;
+		if (params.has('settings')) {
+			params.delete('settings');
+			window.location.search = params.toString();
 		} else {
-			backURL = window.location.href.replace(window.location.hash, '');
-			window.location.href = backURL;
+			window.location.href = window.location.href.replace(
+				window.location.hash,
+				''
+			).replace(
+				window.location.search, 
+				''
+			);
 		}
 	}
 	sebtn.addEventListener('click', goToSettings, false);
 	gbbtn.addEventListener('click', goBack, false);
-	function copyPaste() {
-		navigator.clipboard.writeText(code2.innerText).then(function() {
-			alert('Copied Content to clipboard!');
-		})
+	async function copyPaste() {
+		await navigator.clipboard.writeText(code2.textContent)
+		alert('Copied Content to clipboard!');
 	}
 	cpbtn.addEventListener('click', copyPaste, false);
-	const params = new URLSearchParams(window.location.search);
 	if (params.has('settings')) {
-		code.disabled = true;
-		code.style.display = 'none';
-		code2.style.display = 'none';
-		sbtn.style.display = 'none';
 		settingsModal.style.display = 'block';
-		fontSizeCode.innerHTML = hljs.highlight('console.log("Hello!")', {
-			language: 'js',
-		}).value;
-		sebtn.style.display = 'none';
 	}
 
-	function copy() {
-		navigator.clipboard.writeText(window.location.href).then(function () {
-			alert('Copied Link to clipboard!');
-		});
+	async function copy() {
+		await navigator.clipboard.writeText(window.location.href)
+		alert('Copied URL to clipboard!');
 	}
 	cbtn.addEventListener('click', copy);
-	function save() {
-		const base64 = btoa(code.value);
+	async function save() {
+		let base64
+		try {
+			base64 = await btoa(code.value);
+		} catch (e) {
+			base64 = '';
+			alert("Couldn't encode the text. Please try again.");
+			console.log(e);
+		}
 		location.hash = base64;
 		location.reload();
 	}
@@ -143,7 +139,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 		if (e.ctrlKey && e.shiftKey && key === 'S') {
 			e.preventDefault();
-			if(params.has('settings')) {return;}
+			if (params.has('settings')) {
+				return;
+			}
 			goToSettings();
 		}
 		if (e.ctrlKey && key === 'ArrowLeft') {
@@ -151,13 +149,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			goBack();
 		}
 	});
-	function escapeHTML(str) {
-		return str
-			.replace(/&/g, '&amp;')
-			.replace(/>/g, '&gt;')
-			.replace(/</g, '&lt;')
-			.replace(/"/g, '&quot;');
-	}
 	const extensionMap = {
 		rb: 'ruby',
 		py: 'python',
@@ -197,26 +188,40 @@ document.addEventListener('DOMContentLoaded', function () {
 		return extensionMap[ext] || ext;
 	};
 	if (b64) {
-		const decoded = atob(b64);
+		let decoded;
+		try {	
+			decoded = await atob(b64);
+		} catch (e) {
+			alert('Invalid Base64!');
+			console.log(e);
+			return;
+		}
 		code.disabled = true;
 		code.style.display = 'none';
 		code2.style.display = 'block';
-		code2.innerHTML = escapeHTML(decoded);
 		sbtn.style.display = 'none';
 		cbtn.style.display = 'inline-block';
 		cpbtn.style.display = 'inline-block';
 		if (params.has('lang')) {
 			if (params.get('lang') === null || params.get('lang') === '') return;
 			const lang = params.get('lang').toLowerCase();
-			code2.innerHTML = hljs.highlight(decoded, {
+			code2.innerHTML = await hljs.highlight(decoded, {
 				language: lookupTypeByExtension(lang),
 				ignoreIllegals: true,
 			}).value;
 			document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt';
-			document.head.querySelector('meta[name="title"]').content = lang ? "Rpaste - Base64 - " + lang : "txt";
+			document.head.querySelector('meta[name="title"]').content = lang
+				? 'Rpaste - Base64 - ' + lang
+				: 'txt';
 			return;
 		} else {
-			hljs.highlightElement(code2);
+			const highlight = await hljs.highlightAuto(decoded);
+			if (highlight.language === undefined) {
+				params.append('lang', 'txt');
+			} else {
+				params.append('lang', highlight.language);
+			}
+			window.location.search = params.toString();
 			return;
 		}
 	}

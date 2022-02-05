@@ -16,18 +16,15 @@
 		<link rel="stylesheet" href="style.css" />
 		<link
 			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/atom-one-dark.min.css" />
-		<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.js"></script>
-		<script src="script.js"></script>
+			href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/atom-one-dark.min.css" />
+		<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/highlight.js"></script>
+		<script defer src="script.js"></script>
 		<link rel="icon" href="favicon.ico" />
 	</head>
 	<body>
-		<!--Hello. Why u looking at source code SMH?-->
-		<!--UwU OwO UwU OwO UwU OwO UwU-->
-		<!-- https://rstar284.tk/rpaste/?lang=txt#RXhjdXNlIG1lPwpXaHkgYXJlIHUgaGVyZT8KPz8/Pz8/PwpTbWggd2VpcmRvLg== -->
 		<div id="code-wrapper">
 			<textarea id="code" spellcheck="false" disabled="false"></textarea>
-			<pre id="code2" tabindex="0" spellcheck="false" class="hljs"></pre>
+			<pre id="code2" tabindex="0" spellcheck="false" class="hljs"><code></code></pre>
 		</div>
 		<div id="settingsModal" style="display: none">
 			<br />
@@ -45,13 +42,13 @@
 				<label for="fontSize">
 					<input type="range" min="12" max="72" id="fontSize" />
 					<span class="label" id="fontSizeVal">16</span>
-					<pre><code id="fontSizeCode"></code></pre>
+					<pre><code id="fontSizeCode"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>)</code></pre>
 				</label>
 			</span>
 		</div>
 		<div id="navbar">
-			<a id="sebtn" style="float: left">Settings</a
-			><a id="gbbtn" style="float: left">Go back</a>
+			<a id="sebtn" style="float: left">Settings</a>
+			<a id="gbbtn" style="float: left">Go back</a>
 			<a id="sbtn">Save Paste</a>
 			<a id="cbtn">Copy Link</a>
 			<a id="rbtn">Copy Text</a>
