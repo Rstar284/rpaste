@@ -5,7 +5,7 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 
 
 TODO:
-- [ ] Add line count. CSS is weird.
+- [ ] Add line count. CSS is weird. JS is dumb.
 - [ ] Font selection.
 - [ ] Theme selection.  
 - [ ] Syntax Theme selection.
