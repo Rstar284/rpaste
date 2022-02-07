@@ -26,10 +26,12 @@ code2.style.display = 'none';
 const b64 = location.hash.split('#')[1];
 const params = new URLSearchParams(window.location.search);
 
+// add theme class to the document
 function setTheme(themeName) {
 	localStorage.setItem('theme', themeName);
 	document.documentElement.className = themeName;
 }
+// switch theme
 function toggleTheme() {
 	if (localStorage.getItem('theme') === 'dark') {
 		setTheme('light');
@@ -39,6 +41,8 @@ function toggleTheme() {
 		themebox.checked = true;
 	}
 }
+
+// on page load set the theme
 (function () {
 	if (localStorage.getItem('theme') === null) {
 		setTheme('dark');
@@ -50,8 +54,7 @@ function toggleTheme() {
 		setTheme('light');
 		themebox.checked = false;
 	}
-})();
-(function () {
+	// set font size from local storage
 	if (localStorage.getItem('fontSize') === null) {
 		fontSizeCode.style.fontSize = '16px';
 		fontSizeVal.textContent = '16px';
@@ -74,36 +77,39 @@ fontSizeSlider.addEventListener('input', function () {
 fontSizeSlider.addEventListener('change', function () {
 	localStorage.setItem('fontSize', this.value);
 });
-function goToSettings() {
-	params.append('settings', '');
-	window.location.search = params.toString();
-}
-function goBack() {
-	if (params.has('settings')) {
-		params.delete('settings');
-		window.location.search = params.toString();
+
+// functions to show/hide settings modal
+const showSettings = () => (settingsModal.style.display = 'block');
+const hideSettings = () => (settingsModal.style.display = 'none');
+// go to/come back to/from the settings modal
+const goToSettings = () => showSettings();
+const goBack = () => {
+	if (settingsModal.style.display === 'block') {
+		hideSettings();
 	} else {
 		window.location.href = window.location.href
 			.replace(window.location.hash, '')
 			.replace(window.location.search, '');
 	}
-}
+};
 sebtn.addEventListener('click', goToSettings, false);
 gbbtn.addEventListener('click', goBack, false);
+
+// copy paste content to clipboard
 async function copyPaste() {
 	await navigator.clipboard.writeText(code2.textContent);
 	alert('Copied Content to clipboard!');
 }
 cpbtn.addEventListener('click', copyPaste, false);
-if (params.has('settings')) {
-	settingsModal.style.display = 'block';
-}
 
+// copy the URL
 async function copy() {
 	await navigator.clipboard.writeText(window.location.href);
 	alert('Copied URL to clipboard!');
 }
 cbtn.addEventListener('click', copy);
+
+// save the paste
 async function save() {
 	let base64;
 	try {
@@ -117,33 +123,49 @@ async function save() {
 	location.reload();
 }
 sbtn.addEventListener('click', save);
-document.addEventListener('keydown', function (e) {
-	e = e || event || window.event;
+
+// Set keybindings
+document.addEventListener('keydown', (e) => {
+	e = e || window.event || event;
 	const key = e.key;
-	if (e.ctrlKey && key === 's') {
-		e.preventDefault();
-		save();
-	}
-	if (e.ctrlKey && e.shiftKey && key === 'L') {
-		e.preventDefault();
-		copy();
-	}
-	if (e.ctrlKey && e.shiftKey && key === 'C') {
-		e.preventDefault();
-		copyPaste();
-	}
-	if (e.ctrlKey && e.shiftKey && key === 'S') {
-		e.preventDefault();
-		if (params.has('settings')) {
-			return;
-		}
-		goToSettings();
-	}
-	if (e.ctrlKey && key === 'ArrowLeft') {
-		e.preventDefault();
-		goBack();
+	switch (key) {
+		case 's':
+			if (!e.ctrlKey) {
+				return;
+			}
+			e.preventDefault();
+			save();
+		case 'L':
+			if (!e.ctrlKey && e.shiftKey) {
+				return;
+			}
+			e.preventDefault();
+			copy();
+		case 'C':
+			if (!e.ctrlKey && e.shiftKey) {
+				return;
+			}
+			e.preventDefault();
+			copyPaste();
+		case 'S':
+			if (!e.ctrlKey && e.shiftKey) {
+				return;
+			}
+			e.preventDefault();
+			if (params.has('settings')) {
+				return;
+			}
+			goToSettings();
+		case 'ArrowLeft':
+			if (!e.ctrlKey) {
+				return;
+			}
+			e.preventDefault();
+			goBack();
 	}
 });
+
+// valid extensions
 const extensionMap = {
 	rb: 'ruby',
 	py: 'python',
@@ -179,9 +201,11 @@ const extensionMap = {
 	coffee: 'coffee',
 	swift: 'swift',
 };
-const lookupTypeByExtension = function (ext) {
-	return extensionMap[ext] || ext;
-};
+
+// get lang by extension
+const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
+
+// decode the hash and highlight it. then set it to the code element
 (async function () {
 	if (b64) {
 		let decoded;
@@ -202,14 +226,10 @@ const lookupTypeByExtension = function (ext) {
 			if (params.get('lang') === null || params.get('lang') === '') return;
 			const lang = params.get('lang').toLowerCase();
 			code2.innerHTML = await hljs.highlight(decoded, {
-				language: lookupTypeByExtension(lang),
+				language: lookupLangByExtension(lang),
 				ignoreIllegals: true,
 			}).value;
 			document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt';
-			document.head.querySelector('meta[name="title"]').content = lang
-				? 'Rpaste - Base64 - ' + lang
-				: 'txt';
-			return;
 		} else {
 			const highlight = await hljs.highlightAuto(decoded);
 			if (highlight.language === undefined) {
