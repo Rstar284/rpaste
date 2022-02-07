@@ -79,10 +79,14 @@ fontSizeSlider.addEventListener('change', function () {
 });
 
 // functions to show/hide settings modal
-const showSettings = () => (settingsModal.style.display = 'block');
+const showSettings = () => {
+	if (settingsModal.style.display === 'block') {
+		alert('The settings menu is already open!');
+		return;
+	}
+	settingsModal.style.display = 'block';
+};
 const hideSettings = () => (settingsModal.style.display = 'none');
-// go to/come back to/from the settings modal
-const goToSettings = () => showSettings();
 const goBack = () => {
 	if (settingsModal.style.display === 'block') {
 		hideSettings();
@@ -92,7 +96,7 @@ const goBack = () => {
 			.replace(window.location.search, '');
 	}
 };
-sebtn.addEventListener('click', goToSettings, false);
+sebtn.addEventListener('click', showSettings, false);
 gbbtn.addEventListener('click', goBack, false);
 
 // copy paste content to clipboard
@@ -136,18 +140,15 @@ document.addEventListener('keydown', (e) => {
 		e.preventDefault();
 		copy();
 	}
-	if (e.ctrlKey && e.shiftKey && 	key === 'C') {
+	if (e.ctrlKey && e.shiftKey && key === 'C') {
 		e.preventDefault();
 		copyPaste();
 	}
 	if (e.ctrlKey && e.shiftKey && key === 'S') {
 		e.preventDefault();
-		if (settingsModal.style.display === 'block') {
-			return;
-		}
-		goToSettings();
+		showSettings();
 	}
-	if (e.altKey && key === 'ArrowLeft') {
+	if (e.ctrlKey && key === 'ArrowLeft') {
 		e.preventDefault();
 		goBack();
 	}
