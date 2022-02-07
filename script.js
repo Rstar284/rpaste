@@ -128,40 +128,28 @@ sbtn.addEventListener('click', save);
 document.addEventListener('keydown', (e) => {
 	e = e || window.event || event;
 	const key = e.key;
-	switch (key) {
-		case 's':
-			if (!e.ctrlKey) {
-				return;
-			}
-			e.preventDefault();
-			save();
-		case 'L':
-			if (!e.ctrlKey && e.shiftKey) {
-				return;
-			}
-			e.preventDefault();
-			copy();
-		case 'C':
-			if (!e.ctrlKey && e.shiftKey) {
-				return;
-			}
-			e.preventDefault();
-			copyPaste();
-		case 'S':
-			if (!e.ctrlKey && e.shiftKey) {
-				return;
-			}
-			e.preventDefault();
-			if (params.has('settings')) {
-				return;
-			}
-			goToSettings();
-		case 'ArrowLeft':
-			if (!e.ctrlKey) {
-				return;
-			}
-			e.preventDefault();
-			goBack();
+	if (key === 's' && e.ctrlKey) {
+		e.preventDefault();
+		save();
+	}
+	if (key === 'l' && e.ctrlKey) {
+		e.preventDefault();
+		copy();
+	}
+	if (key === 'C' && e.ctrlKey && e.shiftKey) {
+		e.preventDefault();
+		copyPaste();
+	}
+	if (key === 'S' && e.ctrlKey && e.shiftKey) {
+		e.preventDefault();
+		if (settingsModal.style.display === 'block') {
+			return;
+		}
+		goToSettings();
+	}
+	if (key === 'ArrowLeft' && e.ctrlKey) {
+		e.preventDefault();
+		goBack();
 	}
 });
 
