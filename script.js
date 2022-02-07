@@ -132,7 +132,7 @@ document.addEventListener('keydown', (e) => {
 		e.preventDefault();
 		save();
 	}
-	if (key === 'l' && e.ctrlKey) {
+	if (key === 'L' && e.ctrlKey && e.shiftKey) {
 		e.preventDefault();
 		copy();
 	}
