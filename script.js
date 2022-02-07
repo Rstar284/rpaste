@@ -84,19 +84,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 			params.delete('settings');
 			window.location.search = params.toString();
 		} else {
-			window.location.href = window.location.href.replace(
-				window.location.hash,
-				''
-			).replace(
-				window.location.search, 
-				''
-			);
+			window.location.href = window.location.href
+				.replace(window.location.hash, '')
+				.replace(window.location.search, '');
 		}
 	}
 	sebtn.addEventListener('click', goToSettings, false);
 	gbbtn.addEventListener('click', goBack, false);
 	async function copyPaste() {
-		await navigator.clipboard.writeText(code2.textContent)
+		await navigator.clipboard.writeText(code2.textContent);
 		alert('Copied Content to clipboard!');
 	}
 	cpbtn.addEventListener('click', copyPaste, false);
@@ -105,12 +101,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 	}
 
 	async function copy() {
-		await navigator.clipboard.writeText(window.location.href)
+		await navigator.clipboard.writeText(window.location.href);
 		alert('Copied URL to clipboard!');
 	}
 	cbtn.addEventListener('click', copy);
 	async function save() {
-		let base64
+		let base64;
 		try {
 			base64 = await btoa(code.value);
 		} catch (e) {
@@ -189,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 	};
 	if (b64) {
 		let decoded;
-		try {	
+		try {
 			decoded = await atob(b64);
 		} catch (e) {
 			alert('Invalid Base64!');
