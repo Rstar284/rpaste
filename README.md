@@ -11,7 +11,8 @@ TODO:
 - [x] ~~Syntax Theme selection.~~
 - [ ] More Themes. 
 - [ ] QR Code gen, for sharing to a mobile phone.
-- [ ] Language selection modal
+- [ ] Language selection modal.
+- [ ] Code Execution with the Piston API.
 
 # Known Bugs
 - [ ] Fonts with more than 2 words break when using `setFont` Eg: `setFont("Major+Mono+Display")`
