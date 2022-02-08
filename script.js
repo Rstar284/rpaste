@@ -175,7 +175,7 @@ document.addEventListener('keydown', (e) => {
 // tab key presses
 code.addEventListener('keydown', (e) => {
 	e = e || window.event || event;
-	const space = localStorage.getItem('tab');
+	const space = ' '.repeat(localStorage.getItem('tab'));
 	if (e.key !== 'Tab') return;
 	e.preventDefault();
 	if (document.selection) {
