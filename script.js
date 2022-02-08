@@ -151,10 +151,11 @@ const hideShortcuts = () => (shortcutsModal.style.display = 'none');
 
 // show shortcuts modal
 const showShortcuts = () => {
-	if (shortcutsModal.style.display === 'block') {
+	if (shortcutModal.style.display === 'block') {
 		hideShortcuts();
+		return;
 	}
-	shortcutsModal.style.display = 'block';
+	shortcutModal.style.display = 'block';
 };
 
 // go back to the main page
