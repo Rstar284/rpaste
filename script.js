@@ -137,39 +137,32 @@ themeSelect.addEventListener('change', function () {
 });
 
 // functions to show/hide settings modal
+const hideSettings = () => (settingsModal.style.display = 'none');
 const showSettings = () => {
 	if (settingsModal.style.display === 'block') {
-		alert('The settings menu is already open!');
+		hideSettings();
 		return;
 	}
 	settingsModal.style.display = 'block';
 };
-const hideSettings = () => (settingsModal.style.display = 'none');
+
+// hide shortcuts modal
+const hideShortcuts = () => (shortcutsModal.style.display = 'none');
 
 // show shortcuts modal
 const showShortcuts = () => {
 	if (shortcutsModal.style.display === 'block') {
-		alert('The shortcuts menu is already open!');
-		return;
+		hideShortcuts();
 	}
 	shortcutsModal.style.display = 'block';
-}
-// hide shortcuts modal
-const hideShortcuts = () => (shortcutsModal.style.display = 'none');
+};
 
 // go back to the main page
-const goBack = () => {
-	if (settingsModal.style.display === 'block') {
-		hideSettings();
-	}
-	if(shortcutModal.style.display === 'block') {
-		hideShortcuts();
-	} else {
-		window.location.href = window.location.href
-			.replace(window.location.hash, '')
-			.replace(window.location.search, '');
-	}
-};
+const goBack = () =>
+	(window.location.href = window.location.href
+		.replace(window.location.hash, '')
+		.replace(window.location.search, ''));
+
 sebtn.addEventListener('click', showSettings, false);
 gbbtn.addEventListener('click', goBack, false);
 
