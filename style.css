@@ -100,7 +100,6 @@ body {
 	bottom: 5rem;
 	border-radius: 1rem;
 	box-shadow: var(--color-shadow) 0 0 0.4rem;
-	justify-content: center;
 }
 
 .switch {
@@ -156,12 +155,6 @@ body {
 .label {
 	font-size: 1.5rem;
 	padding-left: 2rem;
-}
-
-hr {
-	left: 0;
-	right: 0;
-	width: 30rem;
 }
 
 #fontSizeCode {
