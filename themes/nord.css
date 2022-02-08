@@ -1,0 +1,19 @@
+@import url('https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/nord.min.css');
+
+.dark {
+	--color-primary: #2e3440;
+	--color-secondary: #3b4252;
+	--color-accent: #434c5e;
+	--color-hover: #4c566a;
+	--color-shadow: #202020;
+	--font-color: #e5e9f0;
+}
+
+.light {
+	--color-primary: #d8dee9;
+	--color-secondary: #e5e9f0;
+	--color-accent: #eceff4;
+	--color-hover: #e5e9f0;
+	--color-shadow: #dbdbdb;
+	--font-color: #3b4252;
+}

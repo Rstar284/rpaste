@@ -76,6 +76,12 @@ const setTab = (tab) => localStorage.setItem('tab', tab);
 		setTab(2);
 	} else {
 		setTab(localStorage.getItem('tab'));
+		for(let option of tabSpaceSwitch.options) {
+			if(option.value === localStorage.getItem('tab')) {
+				option.selected = true;
+				return;
+			}
+		}
 	}
 })();
 
@@ -88,7 +94,7 @@ fontSizeSlider.addEventListener('change', function () {
 	localStorage.setItem('fontSize', this.value);
 });
 tabSpaceSwitch.addEventListener('change', function () {
-	let dropdown = document.querySelectorAll('.drop');
+	let dropdown = document.querySelectorAll('.drop-tab');
 	dropdown.forEach((item) => {
 		item.addEventListener('click', () => {
 			setTab(item.value);

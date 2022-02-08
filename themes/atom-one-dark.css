@@ -1,0 +1,19 @@
+@import url('https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@latest/build/styles/atom-one-dark.min.css');
+
+.dark {
+	--color-primary: #282c34;
+	--color-secondary: #31353f;
+	--color-accent: #393f4a;
+	--color-hover: #3b3f4c;
+	--color-shadow: #202020;
+	--font-color: #abb2bf;
+}
+
+.light {
+	--color-primary: #fafafa;
+	--color-secondary: #f0f0f0;
+	--color-accent: #e6e6e6;
+	--color-hover: #dcdcdc;
+	--color-shadow: #dbdbdb;
+	--font-color: #383a42;
+}

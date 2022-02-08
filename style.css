@@ -1,22 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
-
-.dark {
-	--color-primary: #282c34;
-	--color-secondary: #31353f;
-	--color-accent: #393f4a;
-	--color-hover: #3b3f4c;
-	--color-shadow: #202020;
-	--font-color: #abb2bf;
-}
-
-.light {
-	--color-primary: #fafafa;
-	--color-secondary: #f0f0f0;
-	--color-accent: #e6e6e6;
-	--color-hover: #dcdcdc;
-	--color-shadow: #dbdbdb;
-	--font-color: #383a42;
-}
+@import url('themes/atom-one-dark.css');
+/* @import url('themes/nord.css'); */
 
 * {
 	box-sizing: border-box;
