@@ -11,6 +11,7 @@ const themebox = document.getElementById('theme');
 const fontSizeSlider = document.getElementById('fontSize');
 const fontSizeVal = document.getElementById('fontSizeVal');
 const fontSizeCode = document.getElementById('fontSizeCode');
+const tabSpaceSwitch = document.getElementById('tabSpaceSwitch');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -42,6 +43,9 @@ function toggleTheme() {
 	}
 }
 
+// set tab size in local storage
+const setTab = (tab) => localStorage.setItem('tab', tab);
+
 // on page load set the theme
 (function () {
 	if (localStorage.getItem('theme') === null) {
@@ -67,6 +71,12 @@ function toggleTheme() {
 			localStorage.getItem('fontSize').toString() + 'px';
 		fontSizeSlider.value = localStorage.getItem('fontSize');
 	}
+	// set tab size from local storage
+	if (localStorage.getItem('tab') === null) {
+		setTab(2);
+	} else {
+		setTab(localStorage.getItem('tab'));
+	}
 })();
 
 themebox.addEventListener('change', toggleTheme, false);
@@ -76,6 +86,14 @@ fontSizeSlider.addEventListener('input', function () {
 });
 fontSizeSlider.addEventListener('change', function () {
 	localStorage.setItem('fontSize', this.value);
+});
+tabSpaceSwitch.addEventListener('change', function () {
+	let dropdown = document.querySelectorAll('.drop');
+	dropdown.forEach((item) => {
+		item.addEventListener('click', () => {
+			setTab(item.value);
+		});
+	});
 });
 
 // functions to show/hide settings modal
@@ -151,6 +169,33 @@ document.addEventListener('keydown', (e) => {
 	if (e.ctrlKey && key === 'ArrowLeft') {
 		e.preventDefault();
 		goBack();
+	}
+});
+
+// tab key presses
+code.addEventListener('keydown', (e) => {
+	e = e || window.event || event;
+	const space = localStorage.getItem('tab');
+	if (e.key !== 'Tab') return;
+	e.preventDefault();
+	if (document.selection) {
+		code.focus();
+		const sel = document.selection.createRange();
+		sel.text = space;
+		code.focus();
+	} else if (code.selectionStart || code.selectionStart === 0) {
+		const val = code.value;
+		const start = code.selectionStart;
+		const end = code.selectionEnd;
+		const scrollTop = code.scrollTop;
+		code.value = val.slice(0, start) + space + val.substring(start, val.length);
+		code.focus();
+		code.selectionStart = start + space.length;
+		code.selectionEnd = start + space.length;
+		code.scrollTop = scrollTop;
+	} else {
+		code.value += space;
+		code.focus();
 	}
 });
 

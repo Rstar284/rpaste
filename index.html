@@ -43,12 +43,24 @@
 			</span>
 			<br />
 			<br />
+			<hr />
 			<span class="label"
 				>Font Size
 				<label for="fontSize">
-					<input type="range" min="12" max="72" id="fontSize" />
-					<span class="label" id="fontSizeVal">16</span>
+					<input type="range" min="12" max="50" id="fontSize" />
+					<span id="fontSizeVal">16</span>
 					<pre><code id="fontSizeCode"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Hi&quot;</span>)</code></pre>
+				</label>
+			</span>
+			<hr />
+			<span class="label"
+				>Tab Space Width
+				<label for="tabSpaceSwitch">
+					<select id="tabSpaceSwitch">
+						<option value="2" selected class="drop">2</option>
+						<option value="4" class="drop">4</option>
+						<option value="8" class="drop">8</option>
+					</select>
 				</label>
 			</span>
 		</div>

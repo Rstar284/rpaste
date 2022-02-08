@@ -74,6 +74,7 @@ body {
 	background: var(--color-secondary);
 	color: var(--font-color);
 	white-space: nowrap;
+	box-shadow: var(--color-shadow) 0 0 0.4rem;
 }
 
 #navbar a {
@@ -93,12 +94,13 @@ body {
 	background-color: var(--color-accent);
 	color: var(--font-color);
 	padding: 0.5em;
-	top: 2rem;
-	left: 2rem;
-	right: 2rem;
-	bottom: 4rem;
+	top: 5rem;
+	left: 5rem;
+	right: 5rem;
+	bottom: 5rem;
 	border-radius: 1rem;
 	box-shadow: var(--color-shadow) 0 0 0.4rem;
+	justify-content: center;
 }
 
 .switch {
@@ -152,5 +154,25 @@ body {
 }
 
 .label {
-	font-size: 25px;
+	font-size: 1.5rem;
+	padding-left: 2rem;
+}
+
+hr {
+	left: 0;
+	right: 0;
+	width: 30rem;
+}
+
+#fontSizeCode {
+	padding-left: 2rem;
+}
+
+#tabSpaceSwitch {
+	background-color: var(--color-secondary);
+	border: 1px solid var(--font-color);
+	border-radius: 0.5rem;
+	color: var(--font-color);
+	padding: 0.5rem;
+	font-size: 1rem;
 }
