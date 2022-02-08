@@ -58,30 +58,30 @@ const setColorScheme = (theme) => {
 };
 
 // on page load set the theme
+if (localStorage.getItem('theme') === null) {
+	setTheme('dark');
+	themebox.checked = true;
+} else if (localStorage.getItem('theme') === 'dark') {
+	setTheme('dark');
+	themebox.checked = true;
+} else {
+	setTheme('light');
+	themebox.checked = false;
+}
+// set font size from local storage
+if (localStorage.getItem('fontSize') === null) {
+	fontSizeCode.style.fontSize = '16px';
+	fontSizeVal.textContent = '16px';
+	fontSizeSlider.value = 16;
+} else {
+	code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
+	code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
+	fontSizeVal.textContent = localStorage.getItem('fontSize') + 'px';
+	fontSizeCode.style.fontSize =
+		localStorage.getItem('fontSize').toString() + 'px';
+	fontSizeSlider.value = localStorage.getItem('fontSize');
+}
 (function () {
-	if (localStorage.getItem('theme') === null) {
-		setTheme('dark');
-		themebox.checked = true;
-	} else if (localStorage.getItem('theme') === 'dark') {
-		setTheme('dark');
-		themebox.checked = true;
-	} else {
-		setTheme('light');
-		themebox.checked = false;
-	}
-	// set font size from local storage
-	if (localStorage.getItem('fontSize') === null) {
-		fontSizeCode.style.fontSize = '16px';
-		fontSizeVal.textContent = '16px';
-		fontSizeSlider.value = 16;
-	} else {
-		code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-		code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-		fontSizeVal.textContent = localStorage.getItem('fontSize') + 'px';
-		fontSizeCode.style.fontSize =
-			localStorage.getItem('fontSize').toString() + 'px';
-		fontSizeSlider.value = localStorage.getItem('fontSize');
-	}
 	// set tab size from local storage
 	if (localStorage.getItem('tab') === null) {
 		setTab(2);
@@ -96,20 +96,19 @@ const setColorScheme = (theme) => {
 	}
 })();
 (function () {
-		// set theme from local storage
-		if (localStorage.getItem('colorscheme') === null) {
-			setColorScheme('atom-one');
-		} else {
-			setColorScheme(localStorage.getItem('colorscheme'));
-			for (let option of themeSelect.options) {
-				if (option.value === localStorage.getItem('colorscheme')) {
-					option.selected = true;
-					return;
-				}
+	// set theme from local storage
+	if (localStorage.getItem('colorscheme') === null) {
+		setColorScheme('atom-one');
+	} else {
+		setColorScheme(localStorage.getItem('colorscheme'));
+		for (let option of themeSelect.options) {
+			if (option.value === localStorage.getItem('colorscheme')) {
+				option.selected = true;
+				return;
 			}
-			
 		}
-})()
+	}
+})();
 
 themebox.addEventListener('change', toggleTheme, false);
 fontSizeSlider.addEventListener('input', function () {
@@ -133,9 +132,8 @@ themeSelect.addEventListener('change', function () {
 		item.addEventListener('click', () => {
 			setColorScheme(item.value);
 		});
-	})
-})
-
+	});
+});
 
 // functions to show/hide settings modal
 const showSettings = () => {

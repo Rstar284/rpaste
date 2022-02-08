@@ -1,0 +1,14 @@
+@import url("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/base16/dracula.min.css");
+
+.dark {
+    --color-primary: #282A36;
+    --color-secondary: #ff79c6;
+    --color-accent: #3a3d4c;
+    --font-color: #f8f8f2;
+}
+.light {
+    --color-primary: #282A36;
+    --color-secondary: #ff79c6;
+    --color-accent: #3a3d4c;
+    --font-color: #f8f8f2;
+}
