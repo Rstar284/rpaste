@@ -1,5 +1,5 @@
 # rpaste
-A pastebin, made in HTML/JS/CSS. (exists at https://rstar284.github.io/rpaste or https://rstar284.github.io/paste or https://rstar284.tk/rpaste or https://rstar284.tk/paste).
+A pastebin, made in HTML/JS/CSS. (exists at https://rstar284.github.io/rpaste).
 Uses base64 to store the paste, thus making it a no-datastore pastebin :D
 DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 
@@ -7,7 +7,8 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 TODO:
 - [ ] Add line count. CSS is weird. JS is dumb.
 - [ ] Font selection.
-- [ ] Theme selection.  Partialy Done
+- [x] ~~Theme selection.~~
+- [ ] More Themes.
 - [ ] Syntax Theme selection.
 - [ ] QR Code gen, for sharing to a mobile phone.
 
