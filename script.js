@@ -13,6 +13,7 @@ const fontSizeVal = document.getElementById('fontSizeVal');
 const fontSizeCode = document.getElementById('fontSizeCode');
 const tabSpaceSelect = document.getElementById('tabSpaceSelect');
 const themeSelect = document.getElementById('themeSelect');
+const shortcutModal = document.getElementById('shortcutsModal');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -144,9 +145,25 @@ const showSettings = () => {
 	settingsModal.style.display = 'block';
 };
 const hideSettings = () => (settingsModal.style.display = 'none');
+
+// show shortcuts modal
+const showShortcuts = () => {
+	if (shortcutsModal.style.display === 'block') {
+		alert('The shortcuts menu is already open!');
+		return;
+	}
+	shortcutsModal.style.display = 'block';
+}
+// hide shortcuts modal
+const hideShortcuts = () => (shortcutsModal.style.display = 'none');
+
+// go back to the main page
 const goBack = () => {
 	if (settingsModal.style.display === 'block') {
 		hideSettings();
+	}
+	if(shortcutModal.style.display === 'block') {
+		hideShortcuts();
 	} else {
 		window.location.href = window.location.href
 			.replace(window.location.hash, '')
@@ -208,6 +225,10 @@ document.addEventListener('keydown', (e) => {
 	if (e.ctrlKey && key === 'ArrowLeft') {
 		e.preventDefault();
 		goBack();
+	}
+	if (e.ctrlKey && key === '.') {
+		e.preventDefault();
+		showShortcuts();
 	}
 });
 
