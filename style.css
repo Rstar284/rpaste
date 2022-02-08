@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
 * {
 	box-sizing: border-box;
-	font-family: monospace;
-	font-family: 'JetBrains Mono', monospace;
 }
 
 body {
@@ -149,7 +146,7 @@ body {
 	border: 1px solid var(--font-color);
 	border-radius: 0.5rem;
 	color: var(--font-color);
-	padding: 0.5rem;
+	padding: 0.75rem;
 	font-size: 1rem;
 }
 
@@ -158,7 +155,7 @@ body {
 	border: 1px solid var(--font-color);
 	border-radius: 0.5rem;
 	color: var(--font-color);
-	padding: 0.5rem;
+	padding: 0.75rem;
 	font-size: 1rem;
 }
 
@@ -179,4 +176,13 @@ body {
 	font-size: 1.25rem;
 	padding-left: 2rem;
 	padding-right: 2rem;
+}
+
+#fontSelect {
+	background-color: var(--color-secondary);
+	border: 1px solid var(--font-color);
+	border-radius: 0.5rem;
+	color: var(--font-color);
+	padding: 0.75rem;
+	font-size: 1rem;
 }

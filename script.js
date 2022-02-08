@@ -14,6 +14,7 @@ const fontSizeCode = document.getElementById('fontSizeCode');
 const tabSpaceSelect = document.getElementById('tabSpaceSelect');
 const themeSelect = document.getElementById('themeSelect');
 const shortcutModal = document.getElementById('shortcutsModal');
+const fontSelect = document.getElementById('fontSelect');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -54,8 +55,23 @@ const setColorScheme = (theme) => {
 	document.body.className = theme;
 	const link = document.createElement('link');
 	link.rel = 'stylesheet';
+	link.type = 'text/css';
 	link.href = `themes/${theme}.css`;
 	document.head.appendChild(link);
+};
+
+// set font in localstorage
+const setFont = (font) => {
+	localStorage.setItem('font', font);
+	const link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`;
+	document.head.appendChild(link);
+	document.body.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
+	code.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
+	code2.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
+	fontSizeCode.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
 };
 
 // on page load set the theme
@@ -111,6 +127,21 @@ if (localStorage.getItem('fontSize') === null) {
 	}
 })();
 
+(function () {
+	// set font from local storage
+	if (localStorage.getItem('font') === null) {
+		setFont('Fira+Mono');
+	} else {
+		setFont(localStorage.getItem('font'));
+		for (let option of fontSelect.options) {
+			if (option.value === localStorage.getItem('font')) {
+				option.selected = true;
+				return;
+			}
+		}
+	}
+})();
+
 themebox.addEventListener('change', toggleTheme, false);
 fontSizeSlider.addEventListener('input', function () {
 	fontSizeVal.textContent = this.value + 'px';
@@ -132,6 +163,14 @@ themeSelect.addEventListener('change', function () {
 	dropdown2.forEach((item) => {
 		item.addEventListener('click', () => {
 			setColorScheme(item.value);
+		});
+	});
+});
+fontSelect.addEventListener('change', function () {
+	let dropdown3 = document.querySelectorAll('.drop-font');
+	dropdown3.forEach((item) => {
+		item.addEventListener('click', () => {
+			setFont(item.value);
 		});
 	});
 });
