@@ -10,7 +10,6 @@ TODO:
 - [x] ~~Theme selection.~~
 - [x] ~~Syntax Theme selection.~~
 - [ ] More Themes. 
-- [ ] QR Code gen, for sharing to a mobile phone.
 - [ ] Language selection modal.
 - [ ] Code Execution with the Piston API.
 
