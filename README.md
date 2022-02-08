@@ -13,3 +13,5 @@ TODO:
 - [ ] QR Code gen, for sharing to a mobile phone.
 
 # Thanks too [@Just-a-Unity-Dev](https://github.com/Just-a-Unity-Dev/) for his [extension](https://github.com/Just-a-Unity-Dev/rpaster.git)
+
+# Feel free to add more themes/other things
