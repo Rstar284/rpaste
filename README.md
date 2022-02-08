@@ -7,7 +7,8 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 TODO:
 - [ ] Add line count. CSS is weird. JS is dumb.
 - [ ] Font selection.
-- [ ] Theme selection.  Partialy Done
+- [x] ~~Theme selection.~~
+- [ ] More Themes.
 - [ ] Syntax Theme selection.
 - [ ] QR Code gen, for sharing to a mobile phone.
 
