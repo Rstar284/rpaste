@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
-@import url('themes/atom-one-dark.css');
-/* @import url('themes/nord.css'); */
 
 * {
 	box-sizing: border-box;
@@ -145,7 +143,16 @@ body {
 	padding-left: 2rem;
 }
 
-#tabSpaceSwitch {
+#tabSpaceSelect {
+	background-color: var(--color-secondary);
+	border: 1px solid var(--font-color);
+	border-radius: 0.5rem;
+	color: var(--font-color);
+	padding: 0.5rem;
+	font-size: 1rem;
+}
+
+#themeSelect {
 	background-color: var(--color-secondary);
 	border: 1px solid var(--font-color);
 	border-radius: 0.5rem;

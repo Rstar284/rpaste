@@ -11,7 +11,8 @@ const themebox = document.getElementById('theme');
 const fontSizeSlider = document.getElementById('fontSize');
 const fontSizeVal = document.getElementById('fontSizeVal');
 const fontSizeCode = document.getElementById('fontSizeCode');
-const tabSpaceSwitch = document.getElementById('tabSpaceSwitch');
+const tabSpaceSelect = document.getElementById('tabSpaceSelect');
+const themeSelect = document.getElementById('themeSelect');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -28,12 +29,12 @@ const b64 = location.hash.split('#')[1];
 const params = new URLSearchParams(window.location.search);
 
 // add theme class to the document
-function setTheme(themeName) {
+const setTheme = (themeName) => {
 	localStorage.setItem('theme', themeName);
 	document.documentElement.className = themeName;
-}
+};
 // switch theme
-function toggleTheme() {
+const toggleTheme = () => {
 	if (localStorage.getItem('theme') === 'dark') {
 		setTheme('light');
 		themebox.checked = false;
@@ -41,10 +42,20 @@ function toggleTheme() {
 		setTheme('dark');
 		themebox.checked = true;
 	}
-}
+};
 
 // set tab size in local storage
 const setTab = (tab) => localStorage.setItem('tab', tab);
+
+// set theme in local storage
+const setColorScheme = (theme) => {
+	localStorage.setItem('colorscheme', theme);
+	document.body.className = theme;
+	const link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = `themes/${theme}.css`;
+	document.head.appendChild(link);
+};
 
 // on page load set the theme
 (function () {
@@ -76,14 +87,29 @@ const setTab = (tab) => localStorage.setItem('tab', tab);
 		setTab(2);
 	} else {
 		setTab(localStorage.getItem('tab'));
-		for(let option of tabSpaceSwitch.options) {
-			if(option.value === localStorage.getItem('tab')) {
+		for (let option of tabSpaceSelect.options) {
+			if (option.value === localStorage.getItem('tab')) {
 				option.selected = true;
 				return;
 			}
 		}
 	}
 })();
+(function () {
+		// set theme from local storage
+		if (localStorage.getItem('colorscheme') === null) {
+			setColorScheme('atom-one');
+		} else {
+			setColorScheme(localStorage.getItem('colorscheme'));
+			for (let option of themeSelect.options) {
+				if (option.value === localStorage.getItem('colorscheme')) {
+					option.selected = true;
+					return;
+				}
+			}
+			
+		}
+})()
 
 themebox.addEventListener('change', toggleTheme, false);
 fontSizeSlider.addEventListener('input', function () {
@@ -93,7 +119,7 @@ fontSizeSlider.addEventListener('input', function () {
 fontSizeSlider.addEventListener('change', function () {
 	localStorage.setItem('fontSize', this.value);
 });
-tabSpaceSwitch.addEventListener('change', function () {
+tabSpaceSelect.addEventListener('change', function () {
 	let dropdown = document.querySelectorAll('.drop-tab');
 	dropdown.forEach((item) => {
 		item.addEventListener('click', () => {
@@ -101,6 +127,15 @@ tabSpaceSwitch.addEventListener('change', function () {
 		});
 	});
 });
+themeSelect.addEventListener('change', function () {
+	let dropdown2 = document.querySelectorAll('.drop-theme');
+	dropdown2.forEach((item) => {
+		item.addEventListener('click', () => {
+			setColorScheme(item.value);
+		});
+	})
+})
+
 
 // functions to show/hide settings modal
 const showSettings = () => {
