@@ -6,11 +6,15 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 
 TODO:
 - [ ] Add line count. CSS is weird. JS has alot of security issues.
-- [ ] Font selection.
+- [x] ~~Font selection.~~
 - [x] ~~Theme selection.~~
 - [x] ~~Syntax Theme selection.~~
-- [ ] More Themes.
+- [ ] More Themes. 
 - [ ] QR Code gen, for sharing to a mobile phone.
+- [ ] Language selection modal
+
+# Known Bugs
+- [ ] Fonts with more than 2 words break when using `setFont` Eg: `setFont("Major+Mono+Display")`
 
 # Thanks too [@Just-a-Unity-Dev](https://github.com/Just-a-Unity-Dev/) for his [extension](https://github.com/Just-a-Unity-Dev/rpaster.git)
 
