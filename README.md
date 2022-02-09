@@ -11,7 +11,9 @@ TODO:
 - [x] ~~Syntax Theme selection.~~
 - [ ] More Themes. 
 - [ ] Language selection modal.
-- [ ] Code Execution with the Piston API.
+- [x] ~~Code Execution with the Piston API.~~
+- [ ] Markdown Display.
+- [ ] Output modal.
 
 # Known Bugs
 - [ ] Fonts with more than 2 words break when using `setFont` Eg: `setFont("Major+Mono+Display")`

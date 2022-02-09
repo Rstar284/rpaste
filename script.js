@@ -273,6 +273,15 @@ async function runCode() {
 				params.get('lang') === res[i].language ||
 				res[i].aliases.includes(params.get('lang'))
 			) {
+				let args = prompt(
+					'What args would you like to pass to the program? (separate with spaces, or leave blank for none)',
+					''
+				);
+				args = args.length > 0 ? args.split(' ') : [''];
+				let stdin = prompt(
+					'What input would you like to give to the program? (leave blank for no input)',
+					''
+				);
 				let body = {
 					language: res[i].language,
 					version: res[i].version,
@@ -281,8 +290,8 @@ async function runCode() {
 							content: code2.textContent,
 						},
 					],
-					stdin: '',
-					args: [''],
+					stdin: stdin,
+					args: args,
 					compile_timeout: 10000,
 					run_timeout: 10000,
 					compile_memory_limit: -1,
@@ -291,38 +300,22 @@ async function runCode() {
 				body = JSON.stringify(body);
 				postCode(body).then((postres) => {
 					if ('compile' in postres) {
-						let comp_stderr;
-						if (postres.compile.stderr.length > 0) {
-							comp_stderr = postres.compile.stderr;
-						} else {
-							comp_stderr = 'No Error';
-						}
-
-						let comp_stdout;
-						if (postres.compile.stdout.length > 0) {
-							comp_stdout = postres.compile.stdout;
-						} else {
-							comp_stdout = 'No Output';
-						}
-
+						const comp_stderr =
+							postres.compile.stderr.length > 0
+								? postres.compile.stderr
+								: 'No Error';
+						const comp_stdout =
+							postres.compile.stdout.length > 0
+								? postres.compile.stdout
+								: 'No Output';
 						alert(
 							`Compilation Output:\nStdout: ${comp_stdout}\nStderr: ${comp_stderr}\nExit code: ${postres.compile.code}`
 						);
 					}
-					let run_stderr;
-					if (postres.run.stderr.length > 0) {
-						run_stderr = postres.run.stderr;
-					} else {
-						run_stderr = 'No Error';
-					}
-
-					let run_stdout;
-					if (postres.run.stdout.length > 0) {
-						run_stdout = postres.run.stdout;
-					} else {
-						run_stdout = 'No Output';
-					}
-
+					const run_stderr =
+						postres.run.stderr.length > 0 ? postres.run.stderr : 'No Error';
+					const run_stdout =
+						postres.run.stdout.length > 0 ? postres.run.stdout : 'No Output';
 					alert(
 						`Execution Output:\nStdout: ${run_stdout}\nStderr: ${run_stderr}\nExit code: ${postres.run.code}`
 					);
