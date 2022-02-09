@@ -4,6 +4,7 @@ const cbtn = document.getElementById('cbtn');
 const sebtn = document.getElementById('sebtn');
 const gbbtn = document.getElementById('gbbtn');
 const cpbtn = document.getElementById('rbtn');
+const rcbtn = document.getElementById('rcbtn');
 const code = document.getElementById('code');
 const code2 = document.getElementById('code2');
 const settingsModal = document.getElementById('settingsModal');
@@ -24,6 +25,7 @@ sbtn.style.display = 'inline-block';
 sebtn.style.display = 'inline-block';
 cpbtn.style.display = 'none';
 gbbtn.style.display = 'inline-block';
+rcbtn.style.display = 'none';
 code.focus();
 code2.style.display = 'none';
 
@@ -35,6 +37,7 @@ const setTheme = (themeName) => {
 	localStorage.setItem('theme', themeName);
 	document.documentElement.className = themeName;
 };
+
 // switch theme
 const toggleTheme = () => {
 	if (localStorage.getItem('theme') === 'dark') {
@@ -235,6 +238,102 @@ async function save() {
 }
 sbtn.addEventListener('click', save);
 
+const getRuntimes = () => {
+	return fetch('https://emkc.org/api/v2/piston/runtimes').then((res) => {
+		if (!res.ok) {
+			console.error(res.error());
+			alert('There was an error: ' + res.error());
+			return;
+		}
+		return res.json();
+	});
+};
+
+const postCode = async (body) => {
+	return fetch('https://emkc.org/api/v2/piston/execute', {
+		method: 'POST',
+		body: body,
+	}).then((res) => {
+		if (!res.ok) {
+			console.error(res.error());
+			alert('There was an error: ' + res.error());
+			return;
+		}
+		return res.json();
+	});
+};
+
+async function runCode() {
+	if (!code2.textContent) {
+		return;
+	}
+	getRuntimes().then((res) => {
+		for (let i = 0; i < res.length; i++) {
+			if (
+				params.get('lang') === res[i].language ||
+				res[i].aliases.includes(params.get('lang'))
+			) {
+				let body = {
+					language: res[i].language,
+					version: res[i].version,
+					files: [
+						{
+							content: code2.textContent,
+						},
+					],
+					stdin: '',
+					args: [''],
+					compile_timeout: 10000,
+					run_timeout: 10000,
+					compile_memory_limit: -1,
+					run_memory_limit: -1,
+				};
+				body = JSON.stringify(body);
+				postCode(body).then((postres) => {
+					if ('compile' in postres) {
+						let comp_stderr;
+						if (postres.compile.stderr.length > 0) {
+							comp_stderr = postres.compile.stderr;
+						} else {
+							comp_stderr = 'No Error';
+						}
+
+						let comp_stdout;
+						if (postres.compile.stdout.length > 0) {
+							comp_stdout = postres.compile.stdout;
+						} else {
+							comp_stdout = 'No Output';
+						}
+
+						alert(
+							`Compilation Output:\nStdout: ${comp_stdout}\nStderr: ${comp_stderr}\nExit code: ${postres.compile.code}`
+						);
+					}
+					let run_stderr;
+					if (postres.run.stderr.length > 0) {
+						run_stderr = postres.run.stderr;
+					} else {
+						run_stderr = 'No Error';
+					}
+
+					let run_stdout;
+					if (postres.run.stdout.length > 0) {
+						run_stdout = postres.run.stdout;
+					} else {
+						run_stdout = 'No Output';
+					}
+
+					alert(
+						`Execution Output:\nStdout: ${run_stdout}\nStderr: ${run_stderr}\nExit code: ${postres.run.code}`
+					);
+				});
+			}
+		}
+	});
+}
+
+rcbtn.addEventListener('click', runCode);
+
 // Set keybindings
 document.addEventListener('keydown', (e) => {
 	e = e || window.event || event;
@@ -262,6 +361,10 @@ document.addEventListener('keydown', (e) => {
 	if (e.ctrlKey && key === '.') {
 		e.preventDefault();
 		showShortcuts();
+	}
+	if (e.ctrlKey && e.shiftKey && key === 'R') {
+		e.preventDefault();
+		runCode();
 	}
 });
 
@@ -349,6 +452,7 @@ const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
 		sbtn.style.display = 'none';
 		cbtn.style.display = 'inline-block';
 		cpbtn.style.display = 'inline-block';
+		rcbtn.style.display = 'inline-block';
 		if (params.has('lang')) {
 			if (params.get('lang') === null || params.get('lang') === '') return;
 			const lang = params.get('lang').toLowerCase();
