@@ -30,7 +30,7 @@ body {
 	color: var(--font-color);
 	background: transparent;
 	display: none;
-	overflow: scroll;
+	overflow: auto;
 	box-shadow: 0rem 0rem black;
 }
 
@@ -201,7 +201,7 @@ i {
 	bottom: 2rem;
 	box-shadow: var(--color-shadow) 0 0 0.4rem;
 	display: none;
-	overflow: scroll;
+	overflow: auto;
 }
 
 #output {
