@@ -20,5 +20,11 @@ TODO:
 
 # Thanks too [@Just-a-Unity-Dev](https://github.com/Just-a-Unity-Dev/) for his [extension](https://github.com/Just-a-Unity-Dev/rpaster.git)
 
+# Credits
+The Fine people at [TCD](https://discord.gg/code) for helping me with the desgin
+[highlight.js](https://highlightjs.org/) for the highlighting lib
+[topaz/paste](https://github.com/topaz/paste/) for the idea
+[toptal/hastebin](https://github.com/toptal/hastebin) for some of the code
+
 # Feel free to add more themes/other things
 Yes you, do what u want, I dont mind :>
