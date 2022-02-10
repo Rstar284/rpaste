@@ -40,6 +40,7 @@ body {
 	left: 0;
 	right: 0;
 	bottom: 2rem;
+	box-shadow: var(--color-shadow) 0rem 0rem 0.4rem;
 }
 
 #navbar {
@@ -190,4 +191,33 @@ body {
 i {
 	color: var(--font-color);
 	font-size: 1.25rem;
+}
+
+#output-wrapper {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	right: 0;
+	bottom: 2rem;
+	box-shadow: var(--color-shadow) 0 0 0.4rem;
+	display: none;
+	overflow: scroll;
+}
+
+#output {
+	width: 100%;
+	height: 100%;
+	padding: 0.5rem;
+	border: 0;
+	margin: 0;
+	color: var(--font-color);
+	background: transparent;
+	white-space: pre-wrap;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }

@@ -7,6 +7,8 @@ const cpbtn = document.getElementById('rbtn');
 const rcbtn = document.getElementById('rcbtn');
 const code = document.getElementById('code');
 const code2 = document.getElementById('code2');
+const output = document.getElementById('output');
+const submitbtn = document.getElementById('submit');
 const settingsModal = document.getElementById('settingsModal');
 const themebox = document.getElementById('theme');
 const fontSizeSlider = document.getElementById('fontSize');
@@ -96,6 +98,7 @@ if (localStorage.getItem('fontSize') === null) {
 } else {
 	code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
 	code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
+	output.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
 	fontSizeVal.textContent = localStorage.getItem('fontSize') + 'px';
 	fontSizeCode.style.fontSize =
 		localStorage.getItem('fontSize').toString() + 'px';
@@ -267,21 +270,18 @@ async function runCode() {
 	if (!code2.textContent) {
 		return;
 	}
+	output.parentElement.parentElement.style.display = 'block';
+	code2.style.right = '50%';
+	let args = prompt('Enter args to pass to the program (seprate with spaces)');
+	args = args ? (args.length > 0 ? args.split(' ') : [' ']) : [''];
+	const stdin = prompt('Enter input to pass to the program');
+	output.textContent = '';
 	getRuntimes().then((res) => {
 		for (let i = 0; i < res.length; i++) {
 			if (
 				params.get('lang') === res[i].language ||
 				res[i].aliases.includes(params.get('lang'))
 			) {
-				let args = prompt(
-					'What args would you like to pass to the program? (separate with spaces, or leave blank for none)',
-					''
-				);
-				args = args.length > 0 ? args.split(' ') : [''];
-				let stdin = prompt(
-					'What input would you like to give to the program? (leave blank for no input)',
-					''
-				);
 				let body = {
 					language: res[i].language,
 					version: res[i].version,
@@ -308,17 +308,18 @@ async function runCode() {
 							postres.compile.stdout.length > 0
 								? postres.compile.stdout
 								: 'No Output';
-						alert(
-							`Compilation Output:\nStdout: ${comp_stdout}\nStderr: ${comp_stderr}\nExit code: ${postres.compile.code}`
-						);
+						output.textContent = `Compilation Output:\n Stdout: ${comp_stdout}\n Stderr: ${comp_stderr}\n Exit code: ${postres.compile.code}\n\n`;
 					}
 					const run_stderr =
-						postres.run.stderr.length > 0 ? postres.run.stderr : 'No Error';
+						postres.run.stderr.length > 0
+							? [
+									postres.run.stderr.slice(0, postres.run.stderr.indexOf(':')),
+									postres.run.stderr.slice(postres.run.stderr.indexOf(':') + 1),
+							  ]
+							: 'No Error';
 					const run_stdout =
 						postres.run.stdout.length > 0 ? postres.run.stdout : 'No Output';
-					alert(
-						`Execution Output:\nStdout: ${run_stdout}\nStderr: ${run_stderr}\nExit code: ${postres.run.code}`
-					);
+					output.textContent += `Execution Output:\n Stdout: ${run_stdout}\n Stderr: ${run_stderr}\n Exit code: ${postres.run.code}`;
 				});
 			}
 		}
