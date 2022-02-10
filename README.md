@@ -22,8 +22,11 @@ TODO:
 
 # Credits
 The Fine people at [TCD](https://discord.gg/code) for helping me with the desgin
+
 [highlight.js](https://highlightjs.org/) for the highlighting lib
+
 [topaz/paste](https://github.com/topaz/paste/) for the idea
+
 [toptal/hastebin](https://github.com/toptal/hastebin) for some of the code
 
 # Feel free to add more themes/other things
