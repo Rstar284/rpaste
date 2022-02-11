@@ -18,6 +18,7 @@ const tabSpaceSelect = document.getElementById('tabSpaceSelect');
 const themeSelect = document.getElementById('themeSelect');
 const shortcutModal = document.getElementById('shortcutsModal');
 const fontSelect = document.getElementById('fontSelect');
+const lineWrap = document.getElementById('lineWrap');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -77,6 +78,25 @@ const setFont = (font) => {
 	code.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
 	code2.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
 	fontSizeCode.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
+};
+
+const setLineWrap = (wrap) => {
+	localStorage.setItem('lineWrap', wrap);
+	code2.style.whiteSpace = wrap ? 'pre-wrap' : 'pre';
+	code2.style.whiteSpace = wrap ? '-moz-pre-wrap' : 'pre';
+	code2.style.whiteSpace = wrap ? '-pre-wrap' : 'pre';
+	code2.style.whiteSpace = wrap ? '-o-pre-wrap' : 'pre';
+	code2.style.wordWrap = wrap ? 'break-word' : 'normal';
+};
+
+const toggleLineWrap = () => {
+	if (localStorage.getItem('lineWrap') === 'true') {
+		setLineWrap(false);
+		lineWrap.checked = false;
+	} else {
+		setLineWrap(true);
+		lineWrap.checked = true;
+	}
 };
 
 // on page load set the theme
@@ -147,6 +167,16 @@ if (localStorage.getItem('fontSize') === null) {
 		}
 	}
 })();
+if (localStorage.getItem('lineWrap') === null) {
+	setLineWrap(false);
+	lineWrap.checked = false;
+} else if (localStorage.getItem('lineWrap') === 'true') {
+	setLineWrap(true);
+	lineWrap.checked = true;
+} else {
+	setLineWrap(false);
+	lineWrap.checked = false;
+}
 
 themebox.addEventListener('change', toggleTheme, false);
 fontSizeSlider.addEventListener('input', function () {
@@ -180,6 +210,7 @@ fontSelect.addEventListener('change', function () {
 		});
 	});
 });
+lineWrap.addEventListener('change', toggleLineWrap, false);
 
 // functions to show/hide settings modal
 const hideSettings = () => (settingsModal.style.display = 'none');
@@ -219,10 +250,39 @@ async function copyPaste() {
 }
 cpbtn.addEventListener('click', copyPaste, false);
 
+const shortyPost = async () => {
+	return fetch('https://link.what-is.ml/api/new', {
+		method: 'POST',
+		body: JSON.stringify({url: window.location.href}),
+	}).then((res) => res.text());
+};
+
+// intermediate function to stop stupid broswers from being dumb
+async function _copy() {
+	if (localStorage.getItem('shorty') === null) {
+		const prompt = confirm('Would you like to use link-shorty as a link shortener?');
+		if (prompt === true) {
+			localStorage.setItem('shorty', 'true');
+			let text;
+			await shortyPost().then((res) => navigator.clipboard.writeText(res));
+			alert('Copied URL to clipboard!');
+		} else {
+			localStorage.setItem('shorty', 'false');
+			await navigator.clipboard.writeText(window.location.href);
+			alert('Copied URL to clipboard!');
+		}
+	} else if (localStorage.getItem('shorty') === 'true') {
+		await shortyPost().then((res) => navigator.clipboard.writeText(res));
+		alert('Copied URL to clipboard!');
+	} else {
+		await navigator.clipboard.writeText(window.location.href);
+		alert('Copied URL to clipboard!');
+	}
+}
+
 // copy the URL
 async function copy() {
-	await navigator.clipboard.writeText(window.location.href);
-	alert('Copied URL to clipboard!');
+	await _copy();
 }
 cbtn.addEventListener('click', copy);
 
