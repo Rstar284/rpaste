@@ -275,9 +275,7 @@ async function _copy() {
 			alert('Copied URL to clipboard!');
 		} else {
 			localStorage.setItem('shorty', 'false');
-			confirm('To allow you to copy the link you must click "OK" :>');
-			await navigator.clipboard.writeText(window.location.href);
-			alert('Copied URL to clipboard!');
+			alert('To allow you to copy the link you must click the copy button again. browsers are dumb :>');
 		}
 	} else if (localStorage.getItem('shorty') === 'true') {
 		await shortyPost().then((res) => navigator.clipboard.writeText(res));
