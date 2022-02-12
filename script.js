@@ -251,23 +251,31 @@ async function copyPaste() {
 cpbtn.addEventListener('click', copyPaste, false);
 
 const shortyPost = async () => {
-	return fetch('https://link.what-is.ml/api/new', {
+	const headers = new Headers();
+	headers.append('Content-Type', 'application/json');
+	headers.append('Accept', 'text/plain');
+	const req = await fetch('https://link.what-is.ml/api/new', {
 		method: 'POST',
+		headers: headers,
 		body: JSON.stringify({url: window.location.href}),
-	}).then((res) => res.text());
+	});
+	return await req.text();
 };
 
 // intermediate function to stop stupid broswers from being dumb
 async function _copy() {
 	if (localStorage.getItem('shorty') === null) {
-		const prompt = confirm('Would you like to use link-shorty as a link shortener?');
+		const prompt = confirm(
+			'Would you like to use link-shorty as a link shortener?'
+		);
 		if (prompt === true) {
 			localStorage.setItem('shorty', 'true');
-			let text;
-			await shortyPost().then((res) => navigator.clipboard.writeText(res));
+			const text = await shortyPost()
+			await navigator.clipboard.writeText(text);
 			alert('Copied URL to clipboard!');
 		} else {
 			localStorage.setItem('shorty', 'false');
+			confirm('To allow you to copy the link you must click "OK" :>');
 			await navigator.clipboard.writeText(window.location.href);
 			alert('Copied URL to clipboard!');
 		}
