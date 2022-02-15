@@ -533,7 +533,7 @@ const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
 				language: lookupLangByExtension(lang),
 				ignoreIllegals: true,
 			}).value;
-			hljs.lineNumbersBlock(code2, {singeLine: true});
+			await hljs.lineNumbersBlock(code2, {singleLine: true});
 			document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt';
 		} else {
 			const highlight = await hljs.highlightAuto(decoded);
