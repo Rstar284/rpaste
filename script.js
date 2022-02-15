@@ -27,7 +27,7 @@ cbtn.style.display = 'none';
 sbtn.style.display = 'inline-block';
 sebtn.style.display = 'inline-block';
 cpbtn.style.display = 'none';
-gbbtn.style.display = 'inline-block';
+gbbtn.style.display = 'none';
 rcbtn.style.display = 'none';
 code.focus();
 code2.style.display = 'none';
@@ -526,6 +526,7 @@ const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
 		cbtn.style.display = 'inline-block';
 		cpbtn.style.display = 'inline-block';
 		rcbtn.style.display = 'inline-block';
+		gbbtn.style.display = 'inline-block';
 		if (params.has('lang')) {
 			if (params.get('lang') === null || params.get('lang') === '') return;
 			const lang = params.get('lang').toLowerCase();
