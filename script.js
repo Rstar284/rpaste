@@ -111,19 +111,29 @@ if (localStorage.getItem('theme') === null) {
 	themebox.checked = false;
 }
 // set font size from local storage
-if (localStorage.getItem('fontSize') === null) {
-	fontSizeCode.style.fontSize = '16px';
-	fontSizeVal.textContent = '16px';
-	fontSizeSlider.value = 16;
-} else {
-	code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-	code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-	output.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
-	fontSizeVal.textContent = localStorage.getItem('fontSize') + 'px';
-	fontSizeCode.style.fontSize =
-		localStorage.getItem('fontSize').toString() + 'px';
-	fontSizeSlider.value = localStorage.getItem('fontSize');
+function setFontSize() {
+	if (localStorage.getItem('fontSize') === null) {
+		fontSizeCode.style.fontSize = '16px';
+		fontSizeVal.textContent = '16px';
+		fontSizeSlider.value = 16;
+	} else {
+		code.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
+		code2.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
+		output.style.fontSize = localStorage.getItem('fontSize').toString() + 'px';
+		fontSizeVal.textContent = localStorage.getItem('fontSize') + 'px';
+		fontSizeCode.style.fontSize =
+			localStorage.getItem('fontSize').toString() + 'px';
+		fontSizeSlider.value = localStorage.getItem('fontSize');
+		const nums = document.getElementsByClassName('hljs-ln-n');
+		for (let i = 0; i < nums.length; i++) {
+			nums[i].style.fontSize =
+				localStorage.getItem('fontSize').toString() + 'px';
+		}
+	}
 }
+
+setFontSize();
+
 (function () {
 	// set tab size from local storage
 	if (localStorage.getItem('tab') === null) {
@@ -167,6 +177,7 @@ if (localStorage.getItem('fontSize') === null) {
 		}
 	}
 })();
+
 if (localStorage.getItem('lineWrap') === null) {
 	setLineWrap(false);
 	lineWrap.checked = false;
@@ -185,6 +196,7 @@ fontSizeSlider.addEventListener('input', function () {
 });
 fontSizeSlider.addEventListener('change', function () {
 	localStorage.setItem('fontSize', this.value);
+	setFontSize();
 });
 tabSpaceSelect.addEventListener('change', function () {
 	let dropdown = document.querySelectorAll('.drop-tab');
@@ -270,12 +282,14 @@ async function _copy() {
 		);
 		if (prompt === true) {
 			localStorage.setItem('shorty', 'true');
-			const text = await shortyPost()
+			const text = await shortyPost();
 			await navigator.clipboard.writeText(text);
 			alert('Copied URL to clipboard!');
 		} else {
 			localStorage.setItem('shorty', 'false');
-			alert('To allow you to copy the link you must click the copy button again. browsers are dumb :>');
+			alert(
+				'To allow you to copy the link you must click the copy button again. browsers are dumb :>'
+			);
 		}
 	} else if (localStorage.getItem('shorty') === 'true') {
 		await shortyPost().then((res) => navigator.clipboard.writeText(res));
@@ -494,7 +508,6 @@ const extensionMap = {
 
 // get lang by extension
 const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
-
 // decode the hash and highlight it. then set it to the code element
 (async function () {
 	if (b64) {
@@ -520,6 +533,7 @@ const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
 				language: lookupLangByExtension(lang),
 				ignoreIllegals: true,
 			}).value;
+			hljs.lineNumbersBlock(code2, {singeLine: true});
 			document.title = lang ? 'Rpaste - Base64 - ' + lang : 'txt';
 		} else {
 			const highlight = await hljs.highlightAuto(decoded);
