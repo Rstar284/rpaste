@@ -5,7 +5,7 @@ DISCLAIMER: **Links do get big tho, consider using a link shortner.**
 
 
 TODO:
-- [ ] Add line count. CSS is weird. JS has alot of security issues.
+- [x] ~~Add line count.~~
 - [x] ~~Font selection.~~
 - [x] ~~Theme selection.~~
 - [x] ~~Syntax Theme selection.~~
@@ -13,7 +13,7 @@ TODO:
 - [ ] Language selection modal.
 - [x] ~~Code Execution with the Piston API.~~
 - [ ] Markdown Display.
-- [ ] Output modal.
+- [x] ~~Output modal.~~
 
 # Known Bugs
 - [ ] Fonts with more than 2 words break when using `setFont` Eg: `setFont("Major+Mono+Display")`
