@@ -237,9 +237,9 @@ button:focus {
 }
 
 .hljs-ln-n {
-	padding-right: 1rem;
+	padding-right: 0.5rem;
 }
 
 .hljs-ln-code {
-	padding-left: 1rem;
+	padding-left: 0.5rem;
 }
