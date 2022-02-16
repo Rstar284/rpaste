@@ -7,6 +7,7 @@
 body {
 	background-color: var(--color-primary);
 	font-size: 16px;
+	text-rendering: optimizeSpeed;
 }
 
 #code {
@@ -213,6 +214,15 @@ i {
 	width: 100%;
 	height: 100%;
 	padding: 0.5rem;
+	border: 0;
+	margin: 0;
+	color: var(--font-color);
+	background: var(--color-primary);
+	white-space: pre-wrap;
+}
+
+#output * {
+	padding-left: 0.5rem;
 	border: 0;
 	margin: 0;
 	color: var(--font-color);

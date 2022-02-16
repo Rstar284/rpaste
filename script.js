@@ -18,7 +18,6 @@ const tabSpaceSelect = document.getElementById('tabSpaceSelect');
 const themeSelect = document.getElementById('themeSelect');
 const shortcutModal = document.getElementById('shortcutsModal');
 const fontSelect = document.getElementById('fontSelect');
-const lineWrap = document.getElementById('lineWrap');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -78,25 +77,7 @@ const setFont = (font) => {
 	code.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
 	code2.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
 	fontSizeCode.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
-};
-
-const setLineWrap = (wrap) => {
-	localStorage.setItem('lineWrap', wrap);
-	code2.style.whiteSpace = wrap ? 'pre-wrap' : 'pre';
-	code2.style.whiteSpace = wrap ? '-moz-pre-wrap' : 'pre';
-	code2.style.whiteSpace = wrap ? '-pre-wrap' : 'pre';
-	code2.style.whiteSpace = wrap ? '-o-pre-wrap' : 'pre';
-	code2.style.wordWrap = wrap ? 'break-word' : 'normal';
-};
-
-const toggleLineWrap = () => {
-	if (localStorage.getItem('lineWrap') === 'true') {
-		setLineWrap(false);
-		lineWrap.checked = false;
-	} else {
-		setLineWrap(true);
-		lineWrap.checked = true;
-	}
+	output.style.fontFamily = `${font.replace('+', ' ')}, monospace`;
 };
 
 // on page load set the theme
@@ -178,17 +159,6 @@ setFontSize();
 	}
 })();
 
-if (localStorage.getItem('lineWrap') === null) {
-	setLineWrap(false);
-	lineWrap.checked = false;
-} else if (localStorage.getItem('lineWrap') === 'true') {
-	setLineWrap(true);
-	lineWrap.checked = true;
-} else {
-	setLineWrap(false);
-	lineWrap.checked = false;
-}
-
 themebox.addEventListener('change', toggleTheme, false);
 fontSizeSlider.addEventListener('input', function () {
 	fontSizeVal.textContent = this.value + 'px';
@@ -222,7 +192,6 @@ fontSelect.addEventListener('change', function () {
 		});
 	});
 });
-lineWrap.addEventListener('change', toggleLineWrap, false);
 
 // functions to show/hide settings modal
 const hideSettings = () => (settingsModal.style.display = 'none');
@@ -257,8 +226,19 @@ gbbtn.addEventListener('click', goBack, false);
 
 // copy paste content to clipboard
 async function copyPaste() {
-	await navigator.clipboard.writeText(code2.textContent);
-	alert('Copied Content to clipboard!');
+	try {
+		const lncode = document.getElementsByClassName('hljs-ln-code');
+		let content;
+		for(let i = 0; i < lncode.length; i++) {
+			content === undefined ? (content = lncode.item(0).textContent) : (content += '\n' + lncode[i].textContent);
+			// content += lncode.item(item).textContent + '\n';
+		}
+		await navigator.clipboard.writeText(content);
+		alert('Copied Content to clipboard!')
+	} catch (err) {
+		alert("Failed to copy to clipboard!");
+		console.error(err);
+	}
 }
 cpbtn.addEventListener('click', copyPaste, false);
 
@@ -283,8 +263,13 @@ async function _copy() {
 		if (prompt === true) {
 			localStorage.setItem('shorty', 'true');
 			const text = await shortyPost();
-			await navigator.clipboard.writeText(text);
-			alert('Copied URL to clipboard!');
+			try {
+				await navigator.clipboard.writeText(text);
+				alert('Copied URL to clipboard!');
+			} catch (e) {
+				alert('Failed to copy to clipboard!');
+				console.error(e);
+			}
 		} else {
 			localStorage.setItem('shorty', 'false');
 			alert(
@@ -292,11 +277,23 @@ async function _copy() {
 			);
 		}
 	} else if (localStorage.getItem('shorty') === 'true') {
-		await shortyPost().then((res) => navigator.clipboard.writeText(res));
-		alert('Copied URL to clipboard!');
+		await shortyPost().then((res) => {
+			try {
+				navigator.clipboard.writeText(res);
+				alert('Copied URL to clipboard!');
+			} catch (e) {
+				alert('Failed to copy to clipboard!');
+				console.error(e);
+			}
+		});
 	} else {
-		await navigator.clipboard.writeText(window.location.href);
-		alert('Copied URL to clipboard!');
+		try {
+			await navigator.clipboard.writeText(window.location.href);
+			alert('Copied URL to clipboard!');
+		} catch (e) {
+			alert('Failed to copy to clipboard!');
+			console.error(e);
+		}
 	}
 }
 
@@ -346,15 +343,52 @@ const postCode = async (body) => {
 	});
 };
 
+const showOutput = () => {
+	output.parentElement.parentElement.style.display = 'block';
+	code2.style.right = '50%';
+};
+
+// Display Markdown
+async function displayMd() {
+	const md = window.markdownit({
+		html: true,
+		linkify: true,
+		typographer: true,
+		highlight: async (str, lang) => {
+			if (lang && hljs.getLanguage(lang)) {
+				try {
+					return await hljs.highlight(str, {language: lang}).value;
+				} catch (e) {
+					console.error(e);
+				}
+			}
+			return str;
+		},
+	});
+	showOutput();
+	output.innerHTML = await md.render(code2.textContent);
+}
+
 async function runCode() {
 	if (!code2.textContent) {
 		return;
 	}
-	output.parentElement.parentElement.style.display = 'block';
-	code2.style.right = '50%';
-	let args = prompt('Enter args to pass to the program (seprate with spaces)');
+	if (
+		params.get('lang') === 'txt' ||
+		params.get('lang') === 'md' ||
+		params.get('lang') === 'html' ||
+		params.get('lang') === 'xml'
+	) {
+		displayMd();
+		return;
+	}
+	showOutput();
+	let args = prompt(
+		'Enter args to pass to the program (seprate with spaces)',
+		''
+	);
 	args = args ? (args.length > 0 ? args.split(' ') : [' ']) : [''];
-	const stdin = prompt('Enter input to pass to the program');
+	const stdin = prompt('Enter input to pass to the program', '');
 	output.textContent = '';
 	getRuntimes().then((res) => {
 		for (let i = 0; i < res.length; i++) {
@@ -372,8 +406,8 @@ async function runCode() {
 					],
 					stdin: stdin,
 					args: args,
-					compile_timeout: 10000,
-					run_timeout: 10000,
+					compile_timeout: 50000,
+					run_timeout: 50000,
 					compile_memory_limit: -1,
 					run_memory_limit: -1,
 				};
@@ -529,6 +563,9 @@ const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
 		gbbtn.style.display = 'inline-block';
 		if (params.has('lang')) {
 			if (params.get('lang') === null || params.get('lang') === '') return;
+			if (!hljs.getLanguage(params.get('lang'))) {
+				return;
+			}
 			const lang = params.get('lang').toLowerCase();
 			code2.innerHTML = await hljs.highlight(decoded, {
 				language: lookupLangByExtension(lang),
