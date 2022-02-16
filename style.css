@@ -207,7 +207,9 @@ i {
 	bottom: 2rem;
 	box-shadow: var(--color-shadow) 0 0 0.4rem;
 	display: none;
+	background: var(--color-primary);
 	overflow: auto;
+	color: var(--font-color);
 }
 
 #output {
@@ -216,8 +218,6 @@ i {
 	padding: 0.5rem;
 	border: 0;
 	margin: 0;
-	color: var(--font-color);
-	background: var(--color-primary);
 	white-space: pre-wrap;
 }
 
@@ -225,8 +225,6 @@ i {
 	padding-left: 0.5rem;
 	border: 0;
 	margin: 0;
-	color: var(--font-color);
-	background: transparent;
 	white-space: pre-wrap;
 }
 

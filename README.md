@@ -12,7 +12,7 @@ TODO:
 - [ ] More Themes. 
 - [ ] Language selection modal.
 - [x] ~~Code Execution with the Piston API.~~
-- [ ] Markdown Display.
+- [x] ~~Markdown Display~~.
 - [x] ~~Output modal.~~
 
 # Known Bugs
