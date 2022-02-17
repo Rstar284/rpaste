@@ -207,9 +207,7 @@ i {
 	bottom: 2rem;
 	box-shadow: var(--color-shadow) 0 0 0.4rem;
 	display: none;
-	background: var(--color-primary);
 	overflow: auto;
-	color: var(--font-color);
 }
 
 #output {
@@ -219,6 +217,7 @@ i {
 	border: 0;
 	margin: 0;
 	white-space: pre-wrap;
+	color: black;
 }
 
 #output * {
@@ -227,6 +226,25 @@ i {
 	margin: 0;
 	white-space: pre-wrap;
 }
+
+#output a,
+#output a:visited {
+	color: #2a6496;
+	text-decoration: none;
+}
+
+#output a:focus,
+#output a:hover {
+	color: #2a6496;
+	text-decoration: underline;
+	outline: none;
+}
+
+#output code {
+	color: #c7254e;
+	background-color: #f9f2f4;
+	border-radius: 4px;
+}	
 
 input:focus,
 select:focus,

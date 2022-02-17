@@ -18,6 +18,7 @@ const tabSpaceSelect = document.getElementById('tabSpaceSelect');
 const themeSelect = document.getElementById('themeSelect');
 const shortcutModal = document.getElementById('shortcutsModal');
 const fontSelect = document.getElementById('fontSelect');
+const lncode = document.getElementsByClassName('hljs-ln-code');
 
 console.log('UwU OwO UwU OwO UwU OwO UwU'); // a little easter egg hehe
 
@@ -216,10 +217,19 @@ const showShortcuts = () => {
 };
 
 // go back to the main page
-const goBack = () =>
-	(window.location.href = window.location.href
+const goBack = () => {
+	if (settingsModal.style.display === 'block') {
+		hideSettings();
+		return;
+	}
+	if (shortcutModal.style.display === 'block') {
+		hideShortcuts();
+		return;
+	}
+	window.location.href = window.location.href
 		.replace(window.location.hash, '')
-		.replace(window.location.search, ''));
+		.replace(window.location.search, '');
+};
 
 sebtn.addEventListener('click', showSettings, false);
 gbbtn.addEventListener('click', goBack, false);
@@ -227,16 +237,16 @@ gbbtn.addEventListener('click', goBack, false);
 // copy paste content to clipboard
 async function copyPaste() {
 	try {
-		const lncode = document.getElementsByClassName('hljs-ln-code');
 		let content;
-		for(let i = 0; i < lncode.length; i++) {
-			content === undefined ? (content = lncode.item(0).textContent) : (content += '\n' + lncode[i].textContent);
-			// content += lncode.item(item).textContent + '\n';
+		for (let i = 0; i < lncode.length; i++) {
+			content === undefined
+				? (content = lncode.item(0).textContent)
+				: (content += '\n' + lncode[i].textContent);
 		}
 		await navigator.clipboard.writeText(content);
-		alert('Copied Content to clipboard!')
+		alert('Copied Content to clipboard!');
 	} catch (err) {
-		alert("Failed to copy to clipboard!");
+		alert('Failed to copy to clipboard!');
 		console.error(err);
 	}
 }
@@ -345,28 +355,30 @@ const postCode = async (body) => {
 
 const showOutput = () => {
 	output.parentElement.parentElement.style.display = 'block';
-	code2.style.right = '50%';
+	code2.style.width = '50%';
 };
 
 // Display Markdown
 async function displayMd() {
-	const md = window.markdownit({
-		html: true,
-		linkify: true,
-		typographer: true,
-		highlight: async (str, lang) => {
-			if (lang && hljs.getLanguage(lang)) {
-				try {
-					return await hljs.highlight(str, {language: lang}).value;
-				} catch (e) {
-					console.error(e);
-				}
-			}
-			return str;
-		},
-	});
+	let content;
+	for (let i = 0; i < lncode.length; i++) {
+		content === undefined
+			? (content = lncode.item(0).textContent)
+			: (content += '\n' + lncode[i].textContent);
+	}
+	output.parentElement.style.backgroundColor = '#fff';
 	showOutput();
-	output.innerHTML = await md.render(code2.textContent);
+	try {
+		fetch('https://api.github.com/markdown', {
+			method: 'POST',
+			body: `{"text": "${content.replace(/`/g, '\`')}", "mode": "gfm"}`,
+		})
+			.then((res) => res.text())
+			.then((text) => (output.innerHTML = text));
+	} catch (e) {
+		alert('There was an error: ' + e);
+		console.error(e);
+	}
 }
 
 async function runCode() {
