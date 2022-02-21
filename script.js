@@ -365,6 +365,7 @@ async function displayMd() {
 		content === undefined
 			? (content = lncode.item(0).textContent)
 			: (content += '<br>' + lncode[i].textContent);
+		lncode[0] === '' ? (content += '<br>') : null;
 	}
 	output.parentElement.style.backgroundColor = '#fff';
 	showOutput();
