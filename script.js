@@ -364,14 +364,14 @@ async function displayMd() {
 	for (let i = 0; i < lncode.length; i++) {
 		content === undefined
 			? (content = lncode.item(0).textContent)
-			: (content += '\n' + lncode[i].textContent);
+			: (content += '<br>' + lncode[i].textContent);
 	}
 	output.parentElement.style.backgroundColor = '#fff';
 	showOutput();
 	try {
 		fetch('https://api.github.com/markdown', {
 			method: 'POST',
-			body: `{"text": "${content.replace(/`/g, '\`')}", "mode": "gfm"}`,
+			body: `{"text": "${content}", "mode": "gfm"}`,
 		})
 			.then((res) => res.text())
 			.then((text) => (output.innerHTML = text));
