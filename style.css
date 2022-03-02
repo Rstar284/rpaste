@@ -217,7 +217,7 @@ i {
 	border: 0;
 	margin: 0;
 	white-space: pre-wrap;
-	color: black;
+	color: var(--font-color);
 }
 
 #output * {
