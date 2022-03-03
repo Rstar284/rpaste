@@ -367,8 +367,6 @@ async function displayMd() {
 			: (content += '<br>' + lncode[i].textContent);
 		lncode[0] === '' ? (content += '<br>') : null;
 	}
-	output.parentElement.style.backgroundColor = '#fff';
-        output.style.color = '#000';
 	showOutput();
 	try {
 		fetch('https://api.github.com/markdown', {
