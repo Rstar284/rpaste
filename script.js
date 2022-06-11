@@ -195,13 +195,22 @@ fontSelect.addEventListener('change', function () {
 });
 
 // functions to show/hide settings modal
-const hideSettings = () => (settingsModal.style.display = 'none');
+const hideSettings = () => {
+    settingsModal.style.display = 'none'
+    code2.style.filter = 'none'
+    code.style.filter = 'none'
+    code.disabled = false
+    code.focus()
+};
 const showSettings = () => {
 	if (settingsModal.style.display === 'block') {
 		hideSettings();
 		return;
 	}
 	settingsModal.style.display = 'block';
+        code2.style.filter = 'blur(0.5rem)';
+        code.style.filter = 'blur(0.5rem)';
+        code.disabled = true;
 };
 
 // hide shortcuts modal
@@ -317,7 +326,9 @@ cbtn.addEventListener('click', copy);
 async function save() {
 	let base64;
 	try {
-		base64 = btoa(code.value);
+		base64 = window.btoa(encodeURIComponent(code.value).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+            return String.fromCharCode('0x' + p1);
+        }));
 	} catch (e) {
 		base64 = '';
 		alert("Couldn't encode the text. Please try again.");
@@ -327,6 +338,16 @@ async function save() {
 	location.reload();
 }
 sbtn.addEventListener('click', save);
+
+const ansiRegex = ({onlyFirst = false} = {}) => {
+	const pattern = [
+	    '[\\u001B\\u009B ][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))'
+	].join('|');
+
+	return new RegExp(pattern, onlyFirst ? undefined : 'g');
+}
+
 
 const getRuntimes = () => {
 	return fetch('https://emkc.org/api/v2/piston/runtimes').then((res) => {
@@ -369,7 +390,7 @@ async function displayMd() {
 	}
 	showOutput();
 	try {
-		fetch('https://api.github.com/markdown', {
+		await fetch('https://api.github.com/markdown', {
 			method: 'POST',
 			body: `{"text": "${content}", "mode": "gfm"}`,
 		})
@@ -381,13 +402,14 @@ async function displayMd() {
 	}
 }
 
-async function runCode() {
-	if (!code2.textContent) {
+function runCode() {
+    if (!code2.textContent) {
 		return;
 	}
 	if (
 		params.get('lang') === 'txt' ||
 		params.get('lang') === 'md' ||
+                params.get('lang') === 'markdown' ||
 		params.get('lang') === 'html' ||
 		params.get('lang') === 'xml'
 	) {
@@ -433,8 +455,8 @@ async function runCode() {
 						const comp_stdout =
 							postres.compile.stdout.length > 0
 								? postres.compile.stdout
-								: 'No Output';
-						output.textContent = `Compilation Output:\n Stdout: ${comp_stdout}\n Stderr: ${comp_stderr}\n Exit code: ${postres.compile.code}\n\n`;
+								: 'No Output'; 
+						output.textCotent = `Compilation Output:\n Stdout: ${comp_stdout}\n Stderr: ${comp_stderr}\n Exit code: ${postres.compile.code}\n\n`;
 					}
 					const run_stderr =
 						postres.run.stderr.length > 0
@@ -443,8 +465,11 @@ async function runCode() {
 									postres.run.stderr.slice(postres.run.stderr.indexOf(':') + 1),
 							  ]
 							: 'No Error';
-					const run_stdout =
+				        let run_stdout =
 						postres.run.stdout.length > 0 ? postres.run.stdout : 'No Output';
+                                        if(ansiRegex().test(run_stdout)) {
+                                            run_stdout = run_stdout.replace(ansiRegex(), '');
+                                        }
 					output.textContent += `Execution Output:\n Stdout: ${run_stdout}\n Stderr: ${run_stderr}\n Exit code: ${postres.run.code}`;
 				});
 			}
@@ -559,7 +584,9 @@ const lookupLangByExtension = (ext) => extensionMap[ext] || ext;
 	if (b64) {
 		let decoded;
 		try {
-			decoded = atob(b64);
+			decoded = decodeURIComponent(atob(b64).split('').map((c) => {
+                            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                        }).join(''));
 		} catch (e) {
 			alert('Invalid Base64!');
 			console.log(e);
